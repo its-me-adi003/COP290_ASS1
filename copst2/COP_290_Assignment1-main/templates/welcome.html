@@ -8,7 +8,7 @@
     <div class="welcome-container">
         <h1>Welcome, {{ username }}!</h1>
         <p>This is your dashboard.</p>
-        <a href="/logout" class="logout-button">Logout</a>
+        <a href="{{ url_for('home_page') }}">Continue</a>
     </div>
 </body>
 </html>

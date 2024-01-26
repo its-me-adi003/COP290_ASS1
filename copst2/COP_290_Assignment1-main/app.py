@@ -67,5 +67,9 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
+@app.route('/home_page')
+def home_page():
+    return render_template('home_page.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
