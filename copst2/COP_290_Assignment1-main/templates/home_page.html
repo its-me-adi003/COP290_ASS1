@@ -1,14 +1,165 @@
-<!-- logout_page.html -->
+<!-- home_page.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logout Page</title>
+    <title>Home Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Okay lets start</h1>
-    <p>shhhh... lots of work needs to be done.</p>
-    <p><a href="{{ url_for('logout') }}">Logout</a></p>
+    <div class="container mt-5">
+        <h1>Welcome to Your Home Page</h1>
+        <p>Explore and manage your tasks.</p>
+
+        <!-- Form for Start Date, End Date, and Company Code -->
+        <form action="{{ url_for('process_dates') }}" method="post">
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" class="form-control" id="start_date" name="start_date" required>
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" class="form-control" id="end_date" name="end_date" required>
+            </div>
+           
+            <div class="form-group">
+                <label for="company_codes">Select Companies:</label>
+                <select multiple class="form-control" id="company_codes" name="company_codes[]" required>
+
+                    <option value="ADANIENT.NS">ADANIENT</option>
+                    <option value="ADANIPORTS.NS">ADANIPORTS</option>
+                    <option value="APOLLOHOSP.NS">APOLLOHOSP</option>
+                    <option value="ASIANPAINT.NS">ASIANPAINT</option>
+                    <option value="AXISBANK.NS">AXISBANK</option>
+                    <option value="BAJAJ-AUTO.NS">BAJAJ-AUTO</option>
+                    <option value="BAJFINANCE.NS">BAJFINANCE</option>
+                    <option value="BAJAJFINSV.NS">BAJAJFINSV</option>
+                    <option value="BPCL.NS">BPCL</option>
+                    <option value="BHARTIARTL.NS">BHARTIARTL</option>
+                    <option value="BRITANNIA.NS">BRITANNIA</option>
+                    <option value="CIPLA.NS">CIPLA</option>
+                    <option value="COALINDIA.NS">COALINDIA</option>
+                    <option value="DIVISLAB.NS">DIVISLAB</option>
+                    <option value="DRREDDY.NS">DRREDDY</option>
+                    <option value="EICHERMOT.NS">EICHERMOT</option>
+                    <option value="GRASIM.NS">GRASIM</option>
+                    <option value="HCLTECH.NS">HCLTECH</option>
+                    <option value="HDFCBANK.NS">HDFCBANK</option>
+                    <option value="HDFCLIFE.NS">HDFCLIFE</option>
+                    <option value="HEROMOTOCO.NS">HEROMOTOCO</option>
+                    <option value="HINDALCO.NS">HINDALCO</option>
+                    <option value="HINDUNILVR.NS">HINDUNILVR</option>
+                    <option value="ICICIBANK.NS">ICICIBANK</option>
+                    <option value="ITC.NS">ITC</option>
+                    <option value="INDUSINDBK.NS">INDUSINDBK</option>
+                    <option value="INFY.NS">INFY</option>
+                    <option value="JSWSTEEL.NS">JSWSTEEL</option>
+                    <option value="KOTAKBANK.NS">KOTAKBANK</option>
+                    <option value="LTIM.NS">LTIM</option>
+                    <option value="LT.NS">LT</option>
+                    <option value="MARUTI.NS">MARUTI</option>
+                    <option value="NTPC.NS">NTPC</option>
+                    <option value="NESTLEIND.NS">NESTLEIND</option>
+                    <option value="ONGC.NS">ONGC</option>
+                    <option value="POWERGRID.NS">POWERGRID</option>
+                    <option value="RELIANCE.NS">RELIANCE</option>
+                    <option value="SBILIFE.NS">SBILIFE</option>
+                    <option value="SBIN.NS">SBIN</option>
+                    <option value="SUNPHARMA.NS">SUNPHARMA</option>
+                    <option value="TCS.NS">TCS</option>
+                    <option value="TATACONSUM.NS">TATACONSUM</option>
+                    <option value="TATAMOTORS.NS">TATAMOTORS</option>
+                    <option value="TATASTEEL.NS">TATASTEEL</option>
+                    <option value="TECHM.NS">TECHM</option>
+                    <option value="TITAN.NS">TITAN</option>
+                    <option value="UPL.NS">UPL</option>
+                    <option value="ULTRACEMCO.NS">ULTRACEMCO</option>
+                    <option value="WIPRO.NS">WIPRO</option>
+
+                </select>
+            </div>
+            <!-- <div class="form-group">
+                <label for="company_code">Company Code:</label>
+                <select class="form-control" id="company_code" name="company_code" required>
+                    
+                    <option value="ADANIENT.NS">ADANIENT</option>
+                    <option value="ADANIPORTS.NS">ADANIPORTS</option>
+                    <option value="APOLLOHOSP.NS">APOLLOHOSP</option>
+                    <option value="ASIANPAINT.NS">ASIANPAINT</option>
+                    <option value="AXISBANK.NS">AXISBANK</option>
+                    <option value="BAJAJ-AUTO.NS">BAJAJ-AUTO</option>
+                    <option value="BAJFINANCE.NS">BAJFINANCE</option>
+                    <option value="BAJAJFINSV.NS">BAJAJFINSV</option>
+                    <option value="BPCL.NS">BPCL</option>
+                    <option value="BHARTIARTL.NS">BHARTIARTL</option>
+                    <option value="BRITANNIA.NS">BRITANNIA</option>
+                    <option value="CIPLA.NS">CIPLA</option>
+                    <option value="COALINDIA.NS">COALINDIA</option>
+                    <option value="DIVISLAB.NS">DIVISLAB</option>
+                    <option value="DRREDDY.NS">DRREDDY</option>
+                    <option value="EICHERMOT.NS">EICHERMOT</option>
+                    <option value="GRASIM.NS">GRASIM</option>
+                    <option value="HCLTECH.NS">HCLTECH</option>
+                    <option value="HDFCBANK.NS">HDFCBANK</option>
+                    <option value="HDFCLIFE.NS">HDFCLIFE</option>
+                    <option value="HEROMOTOCO.NS">HEROMOTOCO</option>
+                    <option value="HINDALCO.NS">HINDALCO</option>
+                    <option value="HINDUNILVR.NS">HINDUNILVR</option>
+                    <option value="ICICIBANK.NS">ICICIBANK</option>
+                    <option value="ITC.NS">ITC</option>
+                    <option value="INDUSINDBK.NS">INDUSINDBK</option>
+                    <option value="INFY.NS">INFY</option>
+                    <option value="JSWSTEEL.NS">JSWSTEEL</option>
+                    <option value="KOTAKBANK.NS">KOTAKBANK</option>
+                    <option value="LTIM.NS">LTIM</option>
+                    <option value="LT.NS">LT</option>
+                    <option value="MARUTI.NS">MARUTI</option>
+                    <option value="NTPC.NS">NTPC</option>
+                    <option value="NESTLEIND.NS">NESTLEIND</option>
+                    <option value="ONGC.NS">ONGC</option>
+                    <option value="POWERGRID.NS">POWERGRID</option>
+                    <option value="RELIANCE.NS">RELIANCE</option>
+                    <option value="SBILIFE.NS">SBILIFE</option>
+                    <option value="SBIN.NS">SBIN</option>
+                    <option value="SUNPHARMA.NS">SUNPHARMA</option>
+                    <option value="TCS.NS">TCS</option>
+                    <option value="TATACONSUM.NS">TATACONSUM</option>
+                    <option value="TATAMOTORS.NS">TATAMOTORS</option>
+                    <option value="TATASTEEL.NS">TATASTEEL</option>
+                    <option value="TECHM.NS">TECHM</option>
+                    <option value="TITAN.NS">TITAN</option>
+                    <option value="UPL.NS">UPL</option>
+                    <option value="ULTRACEMCO.NS">ULTRACEMCO</option>
+                    <option value="WIPRO.NS">WIPRO</option>
+                
+                   
+                </select>
+            </div> -->
+            <div class="form-group">
+                <label for="stock_type">Stock Type:</label>
+                <select class="form-control" id="stock_type" name="stock_type" required>
+                    <option value="P/E ratio">P/E ratio</option>
+                    <option value="High">High</option>
+                    <option value="Low">Low</option>
+                    <option value="Avg. Price">Avg. Price</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+        {% if plot_filenames %}
+            {% for plot_filename in plot_filenames %}
+                <img src="{{ plot_filename }}" alt="Stock Price Plot" class="img-fluid">
+            {% endfor %}
+        {% endif %}
+        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+    </div>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
