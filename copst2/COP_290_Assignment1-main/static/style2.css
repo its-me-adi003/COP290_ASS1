@@ -1,0 +1,96 @@
+/* style.css */
+body {
+    font-family: 'Arial', sans-serif;
+  /*  background-image: url('stock3.jpg');*/
+     background-image: url('stock4.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+
+/* style.css */
+
+/* style.css */
+/* style.css */
+
+/* style2.css */
+
+/* style2.css */
+
+//* style2.css */
+
+/* Resetting default margin and padding */
+ {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styling body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+}
+
+/* Styling welcome container */
+.welcome-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 50px auto; /* Center align */
+    padding: 30px;
+    text-align: center; /* Align contents to the center */
+}
+
+/* Styling heading */
+h1 {
+    color: #ffffff; /* Set text color to white */
+    font-size: 60px; /* Increase font size */
+    margin-bottom: 20px; /* Add space between heading and paragraph */
+    line-height: 1.5; /* Increase line spacing */
+}
+
+/* Styling paragraph */
+p {
+    color: #ffffff; /* Set text color to white */
+    font-size: 28px; /* Increase font size */
+    margin-bottom: 30px; /* Add more space between paragraph and link */
+    line-height: 1.5; /* Increase line spacing */
+}
+
+/* Styling link */
+a {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #007bff; /* Blueish color */
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+}
+.typing-text {
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: black; }
+}
+
+
