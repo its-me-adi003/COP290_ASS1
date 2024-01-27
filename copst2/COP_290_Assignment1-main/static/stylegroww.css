@@ -1,0 +1,117 @@
+/* stylegroww.css */
+
+/* Reset default margin and padding */
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* Set background image */
+body {
+    background-image: url('back.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Center the container vertically and horizontally */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110vh;
+   /*width: 1000px;*/
+}
+
+/* Style the form container */
+.form-container {
+    display: flex;
+    width: 800px;
+    height: 400px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Style the left section */
+.left-section {
+    flex: 1;
+    padding-right: 10px;
+}
+
+.left-section h2 {
+    text-align: center;
+    font-size:30px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.left-section form {
+    margin-top: 40px;
+}
+
+.left-section .form-group {
+    margin-bottom: 30px;
+}
+
+.left-section input[type="text"],
+.left-section input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.left-section button[type="submit"] {
+    display: block;
+    width: 60%;
+    margin: 0 auto; /* Center the button horizontally */
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: hwb(168 0% 0% / 0.875);
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.left-section button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.left-section p {
+    text-align: center;
+}
+
+.left-section p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.left-section p a:hover {
+    text-decoration: underline;
+}
+
+/* Style the right section */
+.right-section {
+    flex: 1;
+}
+
+.right-section h2 {
+    text-align: center;
+}
+
+/* stylegroww.css */
+
+/* Your existing CSS styles */
+
+/* Style the right section */
+.right-section {
+    background-image: url('imagegroww2.png');
+    background-size: cover;
+    background-position: center;
+    width: 300px; /* Adjust the width as needed */
+    height: 400px; /* Adjust the height as needed */
+}
+
+
