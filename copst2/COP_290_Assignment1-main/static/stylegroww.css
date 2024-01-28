@@ -25,7 +25,7 @@ body {
 /* Style the form container */
 .form-container {
     display: flex;
-    width: 800px;
+    width: 900px;
     height: 400px;
     padding: 5px;
     border: 1px solid #ccc;
