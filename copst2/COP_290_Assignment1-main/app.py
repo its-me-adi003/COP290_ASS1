@@ -79,6 +79,146 @@ def logout():
 def home_page():
     return render_template('home_page.html')
 
+def filter_by_average_price(symbol, min_avg_price, max_avg_price, lookback_period='1y'):
+    try:
+        # Get historical data from Yahoo Finance
+        historical_data = yf.download(symbol, period=lookback_period)
+
+        # Calculate average closing price
+        avg_price = historical_data['Close'].mean()
+
+        # Get information from Yahoo Finance
+        stock_info = yf.Ticker(symbol).info
+
+        # Extract relevant information
+        company_name = stock_info.get('longName', symbol)  # Use symbol if longName is not available
+        pe_ratio = stock_info.get('trailingPE', None)
+
+        # Filter stocks based on average price
+        if min_avg_price <= avg_price <= max_avg_price:
+            return {'symbol': symbol, 'company_name': company_name, 'pe_ratio': pe_ratio, 'avg_price': avg_price}
+        else:
+            return None
+    except Exception as e:
+        print(f"Error fetching data for {symbol}: {e}")
+        return None
+    
+def filter_by_pe_ratio(symbol, min_pe_ratio, max_pe_ratio):
+    try:
+        # Get information from Yahoo Finance
+        stock_info = yf.Ticker(symbol).info
+        historical_data = yf.download(symbol, period='1mo')
+
+        # Extract relevant information
+        pe_ratio = stock_info.get('trailingPE', None)
+        company_name = stock_info.get('longName', symbol)  # Use symbol if longName is not available
+        avg_price = historical_data['Close'].mean()
+
+        # Filter stocks based on P/E ratio within the specified range
+        if pe_ratio is not None and min_pe_ratio <= pe_ratio <= max_pe_ratio:
+            return {'symbol': symbol, 'company_name': company_name, 'pe_ratio': pe_ratio, 'avg_price': avg_price}
+        else:
+            return None
+    except Exception as e:
+        print(f"Error fetching data for {symbol}: {e}")
+        return None
+
+
+
+@app.route('/filter')
+def filter():
+    if 'user_id' in session:
+        return render_template('filter.html')
+    else:
+        return redirect(url_for('index'))
+    
+@app.route('/process_filter', methods=['POST'])
+def process_filter():
+    if 'user_id' in session:
+        if request.method == 'POST':
+            symbol_list = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB']
+
+            pe_ratio_checkbox = request.form.get('pe_ratio_checkbox')
+            avg_price_checkbox = request.form.get('avg_price_checkbox')
+
+            if pe_ratio_checkbox:
+                min_pe_ratio = float(request.form.get('min_pe_ratio', 0))
+                max_pe_ratio = float(request.form.get('max_pe_ratio', float('inf')))
+            else:
+                min_pe_ratio = 0
+                max_pe_ratio = float('inf')
+
+            if avg_price_checkbox:
+                min_avg_price = float(request.form.get('min_avg_price', 0))
+                max_avg_price = float(request.form.get('max_avg_price', float('inf')))
+            else:
+                min_avg_price = 0
+                max_avg_price = float('inf')
+            print(f"PE Ratio Checkbox: {pe_ratio_checkbox}")
+            print(f"Min P/E Ratio: {min_pe_ratio}, Max P/E Ratio: {max_pe_ratio}")
+            print(f"Avg Price Checkbox: {avg_price_checkbox}")
+            print(f"Min Avg Price: {min_avg_price}, Max Avg Price: {max_avg_price}")
+
+            # Perform necessary actions based on the selected options
+            filtered_stocks = []
+
+            for symbol in symbol_list:
+                if not pe_ratio_checkbox and not avg_price_checkbox:
+                    # If no filter is selected, include information for all companies
+                    pe_ratio_info = filter_by_pe_ratio(symbol, min_pe_ratio, max_pe_ratio)
+                    avg_price_info = filter_by_average_price(symbol, min_avg_price, max_avg_price)
+
+                    if pe_ratio_info and avg_price_info:
+                        stock_info = {
+                            'symbol': symbol,
+                            'company_name': pe_ratio_info['company_name'],
+                            'pe_ratio': pe_ratio_info['pe_ratio'],
+                            'avg_price': avg_price_info['avg_price'],
+                        }
+                        filtered_stocks.append(stock_info)
+                elif pe_ratio_checkbox and avg_price_checkbox:
+                    # Apply both P/E Ratio and Average Price filters
+                    pe_ratio_info = filter_by_pe_ratio(symbol, min_pe_ratio, max_pe_ratio)
+                    avg_price_info = filter_by_average_price(symbol, min_avg_price, max_avg_price)
+                    
+                    if pe_ratio_info and avg_price_info:
+                        stock_info = {
+                            'symbol': symbol,
+                            'company_name': pe_ratio_info['company_name'],
+                            'pe_ratio': pe_ratio_info['pe_ratio'],
+                            'avg_price': avg_price_info['avg_price'],
+                        }
+                        filtered_stocks.append(stock_info)
+                elif pe_ratio_checkbox:
+                    # Apply only P/E Ratio filter
+                    pe_ratio_info = filter_by_pe_ratio(symbol, min_pe_ratio, max_pe_ratio)
+                    if pe_ratio_info:
+                        stock_info = {
+                            'symbol': symbol,
+                            'company_name': pe_ratio_info['company_name'],
+                            'pe_ratio': pe_ratio_info['pe_ratio'],
+                            'avg_price': pe_ratio_info['avg_price'],
+                        }
+                        filtered_stocks.append(stock_info)
+                elif avg_price_checkbox:
+                    # Apply only Average Price filter
+                    avg_price_info = filter_by_average_price(symbol, min_avg_price, max_avg_price)
+                    if avg_price_info:
+                        stock_info = {
+                            'symbol': symbol,
+                            'company_name': avg_price_info['company_name'],
+                            'pe_ratio': avg_price_info['pe_ratio'],
+                            'avg_price': avg_price_info['avg_price'],
+                        }
+                        filtered_stocks.append(stock_info)
+
+            print("Filtered Stocks:", filtered_stocks)
+            return render_template('filter.html', filtered_stocks=filtered_stocks)
+
+        return redirect(url_for('dashboard'))
+    else:
+        return redirect(url_for('index'))
+
 @app.route('/process_dates', methods=['POST'])
 def process_dates():
     if 'user_id' in session:
@@ -105,37 +245,13 @@ def process_dates():
 
             return render_template('graph.html', plot_div=plot_div)
             
-            # plot_filename = None
-
-            # # Create a plot for selected companies
-            # plt.figure(figsize=(10, 6))
-            # for company_code in company_codes:
-            #     try:
-            #         stock_data = yf.download(company_code, start=start_dateo, end=end_dateo)
-            #     except Exception as e:
-            #         return f"Failed to fetch data for {company_code}: {e}"
-
-            #     plt.plot(stock_data.index, stock_data['Close'], label=f'{company_code} Closing Price')
-
-            # plt.title('Stock Price Over Time')
-            # plt.xlabel('Date')
-            # plt.ylabel('Closing Price (USD)')
-            # plt.legend()
-            # plt.grid(True)
-            
-
-
-            # # Save the plot as an image
-            # plot_filename = f'static/stock_comparison_plot.png'
-            # plt.savefig(plot_filename)
-            # plt.close()
-
-            # # Pass the plot image filename to the template
-            # return render_template('graph.html', plot_filename=plot_filename)
         else:
             return redirect(url_for('home_page'))
     else:
         return redirect(url_for('index'))
+    
+    
+
 
 if __name__ == '__main__':
     app.run(debug=True)

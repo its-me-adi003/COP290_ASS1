@@ -37,12 +37,14 @@ body {
 .left-section {
     flex: 1;
     padding-right: 10px;
+    font-family: 'Roboto', sans-serif; 
 }
 
 .left-section h2 {
     text-align: center;
-    font-size:30px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size:35px;
+    color: #383b4b;
+    font-family: 'Roboto', sans-serif;
 }
 
 .left-section form {
@@ -52,26 +54,31 @@ body {
 .left-section .form-group {
     margin-bottom: 30px;
 }
-
 .left-section input[type="text"],
 .left-section input[type="password"] {
     width: 90%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 18px; /* Adjust the font size as needed */
+    font-family: 'Roboto', sans-serif; /* Roboto font */
+    /* Add any other styles or properties you may need */
 }
+
 
 .left-section button[type="submit"] {
     display: block;
-    width: 60%;
+    width: 50%;
     margin: 0 auto; /* Center the button horizontally */
     padding: 10px;
     border: none;
     border-radius: 3px;
-    background-color: hwb(168 0% 0% / 0.875);
+    background-color: hwb(157 8% 15% / 0.74);
     color: #fff;
     cursor: pointer;
+    font-size: 18px; 
+    font-family: 'Roboto', sans-serif; /* Roboto font */
 }
 
 

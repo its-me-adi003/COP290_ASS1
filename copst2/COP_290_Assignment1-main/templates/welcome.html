@@ -2,13 +2,15 @@
 <html>
 <head>
     <title>Welcome</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="welcome-container">
         <h1>Welcome, {{ username }}!</h1>
-        <p><b><span class="typing-text">"Charting Your Path to Financial Success."</span></b></p>
-        <a href="{{ url_for('home_page') }}">Enquire Now</a>
+        <p>This is your dashboard.</p>
+        <a href="{{ url_for('home_page') }}">graph analysis</a>
+        <a href="{{ url_for('filter') }}">Filter</a> 
+        <a href="{{ url_for('logout') }}">Logout</a>
     </div>
 </body>
 </html>
