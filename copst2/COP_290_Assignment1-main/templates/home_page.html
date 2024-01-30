@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
@@ -15,15 +14,33 @@
 
         <!-- Form for Start Date, End Date, and Company Code -->
         <form action="{{ url_for('process_dates') }}" method="post">
-            <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="timeRangeCheckbox" name="enter_time_range">
+                <label class="form-check-label" for="timeRangeCheckbox">Enter Time Range</label>
+            </div>
+    
+            <!-- Fields for precise date -->
+            <div class="form-group" id="preciseDateFields1">
                 <label for="start_date">Start Date:</label>
-                <input type="date" class="form-control" id="start_date" name="start_date" required>
+                <input type="date" class="form-control" id="start_date" name="start_date">
             </div>
-            <div class="form-group">
+            <div class="form-group" id="preciseDateFields2">
                 <label for="end_date">End Date:</label>
-                <input type="date" class="form-control" id="end_date" name="end_date" required>
+                <input type="date" class="form-control" id="end_date" name="end_date">
             </div>
-           
+    
+            <!-- Fields for time range -->
+            <div class="form-group" id="timeRangeFields" style="display: none;">
+                <label for="time_range">Select Time Range:</label>
+                <select name="time_range" id="time_range" class="form-control">
+                    <option value="weekly">Last week</option>
+                    <option value="monthly">Last Month</option>
+                    <option value="yearly">Last Year</option>
+                    <option value="yearly3">Last 3 Years</option>
+                    <option value="yearly10">Last 10 Years</option>
+                </select>
+            </div>
+
             <div class="form-group">
                 <label for="company_codes">Select Companies:</label>
                 <select multiple class="form-control" id="company_codes" name="company_codes[]" required>
@@ -84,10 +101,12 @@
             <div class="form-group">
                 <label for="stock_type">Stock Type:</label>
                 <select class="form-control" id="stock_type" name="stock_type" required>
-                    <option value="P/E ratio">P/E ratio</option>
-                    <option value="High">High</option>
-                    <option value="Low">Low</option>
-                    <option value="Avg. Price">Avg. Price</option>
+                    <option value="Open">Open Price</option>
+                    <option value="High">High Price</option>
+                    <option value="Low">Low Price</option>
+                    <option value="Close">Close Price</option>
+                    <option value="Adj Close">Adjusted Close Price</option>
+                    <option value="Volume">Volume</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -102,8 +121,45 @@
     </div>
 
     <!-- Include Bootstrap JS and Popper.js -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+    
+     <script>
+        const timeRangeCheckbox = document.getElementById('timeRangeCheckbox');
+        const preciseDateFields1 = document.getElementById('preciseDateFields1');
+        const preciseDateFields2 = document.getElementById('preciseDateFields2');
+        const timeRangeFields = document.getElementById('timeRangeFields');
+        const startDateInput = document.getElementById('start_date');
+        const endDateInput = document.getElementById('end_date');
+        const timeRangeSelect = document.getElementById('time_range');
+
+        timeRangeCheckbox.addEventListener('change', function () {
+            if (timeRangeCheckbox.checked) {
+                preciseDateFields1.style.display = 'none';
+                preciseDateFields2.style.display = 'none';
+                timeRangeFields.style.display = 'block';
+                startDateInput.value = ''; // Clear the value when hiding
+                endDateInput.value = '';   // Clear the value when hiding
+            } else {
+                preciseDateFields1.style.display = 'block';
+                preciseDateFields2.style.display = 'block';
+                timeRangeFields.style.display = 'none';
+                timeRangeSelect.value = ''; // Clear the value when hiding
+            }
+        });
+
+        // Initial setup based on checkbox state
+        if (timeRangeCheckbox.checked) {
+            preciseDateFields1.style.display = 'none';
+            preciseDateFields2.style.display = 'none';
+            timeRangeFields.style.display = 'block';
+            startDateInput.value = ''; // Clear the value when hiding
+            endDateInput.value = '';   // Clear the value when hiding
+        } else {
+            preciseDateFields1.style.display = 'block';
+            preciseDateFields2.style.display = 'block';
+            timeRangeFields.style.display = 'none';
+            timeRangeSelect.value = ''; // Clear the value when hiding
+        }
+    </script>
 </body>
 </html>

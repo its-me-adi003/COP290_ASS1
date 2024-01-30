@@ -8,9 +8,91 @@
     <div class="welcome-container">
         <h1>Welcome, {{ username }}!</h1>
         <p><b><span class = "typing-text">"Charting your Path to Financial Success"</span></b></p>
-        <a href="{{ url_for('home_page') }}">graph analysis</a>
-        <a href="{{ url_for('filter') }}">Filter</a> 
-        <a href="{{ url_for('logout') }}">Logout</a>
+  
+    </div>
+  <div class="taskbar">
+    <div class="left-half">
+        <div class="organization">
+            <div class="image">
+            <img src="logo.png">
+            </div>
+            <span>TradeHUB</span>
+        </div>
+    </div>
+    <div class="right-half">
+        <div class="buttons">
+            <a href="{{ url_for('home_page') }}">Graph Analysis</a>
+            <a href="{{ url_for('filter') }}">Filter</a> 
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</div>
+   <div class="list-container">
+        <h2>Nifty-50</h2>
+        <ul>
+    <li><a href="https://www.adani.com/">Adani Enterprises Ltd.</a></li>
+    <li><a href="https://www.apollohospitals.com/">Apollo Hospitals Enterprise Ltd.</a></li>
+    <li><a href="https://www.asianpaints.com/">Asian Paints Ltd.</a></li>
+    <li><a href="https://www.axisbank.com/">Axis Bank Ltd.</a></li>
+    <li><a href="https://www.bajajauto.com/">Bajaj Auto Ltd.</a></li>
+    <li><a href="https://www.bajajfinserv.in/">Bajaj Finance Ltd.</a></li>
+    <li><a href="https://www.bajajfinserv.in/">Bajaj Finserv Ltd.</a></li>
+    <li><a href="https://www.bharatpetroleum.com/">Bharat Petroleum Corporation Ltd.</a></li>
+    <li><a href="https://www.britannia.co.in/">Britannia Industries Ltd.</a></li>
+    <li><a href="https://www.cipla.com/">Cipla Ltd.</a></li>
+    <li><a href="https://www.coalindia.in/">Coal India Ltd.</a></li>
+    <li><a href="https://www.divislabs.com/">Divi's Laboratories Ltd.</a></li>
+    <li><a href="https://www.drreddys.com/">Dr. Reddy's Laboratories Ltd.</a></li>
+    <li><a href="https://www.eichermotors.com/">Eicher Motors Ltd.</a></li>
+    <li><a href="https://www.grasim.com/">Grasim Industries Ltd.</a></li>
+    <li><a href="https://www.hcltech.com/">HCL Technologies Ltd.</a></li>
+    <li><a href="https://www.hdfcbank.com/">HDFC Bank Ltd.</a></li>
+    <li><a href="https://www.hdfclife.com/">HDFC Life Insurance Company Ltd.</a></li>
+    <li><a href="https://www.heromotocorp.com/">Hero MotoCorp Ltd.</a></li>
+    <li><a href="https://www.hindalco.com/">Hindalco Industries Ltd.</a></li>
+    <li><a href="https://www.hul.co.in/">Hindustan Unilever Ltd.</a></li>
+    <li><a href="https://www.icicibank.com/">ICICI Bank Ltd.</a></li>
+    <li><a href="https://www.itcportal.com/">ITC Ltd.</a></li>
+    <li><a href="https://www.indusind.com/">IndusInd Bank Ltd.</a></li>
+    <li><a href="https://www.infosys.com/">Infosys Ltd.</a></li>
+    <li><a href="https://www.jsw.in/">JSW Steel Ltd.</a></li>
+    <li><a href="https://www.kotak.com/">Kotak Mahindra Bank Ltd.</a></li>
+    <li><a href="https://www.lntinfotech.com/">LTIMindtree Ltd.</a></li>
+    <li><a href="https://www.larsentoubro.com/">Larsen & Toubro Ltd.</a></li>
+    <li><a href="https://www.ntpc.co.in/">NTPC Ltd.</a></li>
+    <li><a href="https://www.ongcindia.com/">Oil & Natural Gas Corporation Ltd.</a></li>
+    <li><a href="https://www.powergridindia.com/">Power Grid Corporation of India Ltd.</a></li>
+    <li><a href="https://www.ril.com/">Reliance Industries Ltd.</a></li>
+    <li><a href="https://www.sbilife.co.in/">SBI Life Insurance Company Ltd.</a></li>
+    <li><a href="https://www.sunpharma.com/">Sun Pharmaceutical Industries Ltd.</a></li>
+    <li><a href="https://www.tcs.com/">Tata Consultancy Services Ltd.</a></li>
+    <li><a href="https://www.tataconsumer.com/">Tata Consumer Products Ltd.</a></li>
+    <li><a href="https://www.tatamotors.com/">Tata Motors Ltd.</a></li>
+    <li><a href="https://www.adaniports.com/">Adani Ports and Special Economic Zone Ltd.</a></li>
+    <li><a href="https://www.tatasteel.com/">Tata Steel Ltd.</a></li>
+    <li><a href="https://www.techmahindra.com/">Tech Mahindra Ltd.</a></li>
+    <li><a href="https://www.titancompany.in/">Titan Company Ltd.</a></li>
+    <li><a href="https://www.upl-ltd.com/">UPL Ltd.</a></li>
+    <li><a href="https://www.ultratechcement.com/">UltraTech Cement Ltd.</a></li>
+    <li><a href="https://www.wipro.com/">Wipro Ltd.</a></li>
+</ul>
+
+    </div>
+    <div class="toppers">
+    <h2>Top Gaining Companies:-</h2>
+        <ul class="top-gaining-list">
+            {% for company in top_gaining_companies %}
+                <li class="top-gaining-item">{{ company['symbol'] }}: {{ '%.2f' % company['percent_change'] }}%</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="losers">
+        <h2>Top Losing Companies:-</h2>
+        <ul class="top-losing-list">
+            {% for company in top_losing_companies %}
+                <li class="top-losing-item">{{ company['symbol'] }}: {{ '%.2f' % company['percent_change'] }}%</li>
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>

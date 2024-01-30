@@ -7,6 +7,7 @@ import plotly.express as px
 import pandas as pd
 from datetime import datetime
 import matplotlib
+from datetime import timedelta
 matplotlib.use('Agg')
 
 
@@ -62,12 +63,45 @@ def login():
         flash('Invalid username or password')
         return redirect(url_for('index'))
 
+
+def get_top_companies(symbol_list, lookback_period='4d', top_count=5, get_gainers=True):
+    top_companies = []
+
+    for symbol in symbol_list:
+        try:
+            # Download historical data
+            historical_data = yf.download(symbol, period=lookback_period)
+
+            # Drop NaN values
+            historical_data = historical_data.dropna()
+
+            # Calculate percentage change
+            percent_change = (historical_data['Close'].pct_change() * 100).iloc[-1]
+
+            # Append to the list
+            top_companies.append({'symbol': symbol, 'percent_change': percent_change})
+        except Exception as e:
+            print(f"Error fetching data for {symbol}: {e}")
+
+    # Sort the list by percentage change in ascending or descending order based on the parameter
+    top_companies.sort(key=lambda x: x['percent_change'], reverse=not get_gainers)
+
+    # Return the top specified number of companies
+    return top_companies[:top_count]
+
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
-        return render_template('welcome.html', username=session['username'])
+        symbol_list = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'SBIN.NS', 'SBILIFE.NS']
+        
+        # Get top gaining and losing companies
+        top_gaining_companies = get_top_companies(symbol_list, lookback_period='5d', get_gainers=True)
+        top_losing_companies = get_top_companies(symbol_list, lookback_period='5d', get_gainers=False)
+        #print(top_gaining_companies)
+        return render_template('welcome.html', username=session['username'],top_gaining_companies=top_gaining_companies,top_losing_companies=top_losing_companies)
     else:
         return redirect(url_for('index'))
+
 
 @app.route('/logout')
 def logout():
@@ -223,24 +257,50 @@ def process_filter():
 def process_dates():
     if 'user_id' in session:
         if request.method == 'POST':
-            start_date = request.form['start_date']
-            start_dateo = datetime.strptime(start_date, '%Y-%m-%d')
-            end_date = request.form['end_date']
-            end_dateo = datetime.strptime(end_date, '%Y-%m-%d')
-            company_codes = request.form.getlist('company_codes[]')
+            enter_time_range = 'enter_time_range' in request.form
             
+            if enter_time_range:
+                # If the checkbox is ticked, calculate start_date and end_date based on the selected time range
+                time_range = request.form['time_range']
+                end_date = datetime.now()
+                
+                if time_range == 'weekly':
+                    start_date = end_date - timedelta(weeks=1)
+                elif time_range == 'monthly':
+                    start_date = end_date - timedelta(weeks=4)  # Assuming 4 weeks per month
+                elif time_range == 'yearly':
+                    start_date = end_date - timedelta(weeks=52)
+                elif time_range == 'yearly3':
+                    start_date = end_date - timedelta(days=365*3)
+                elif time_range == 'yearly10':
+                    start_date = end_date - timedelta(days=3650)# Assuming 52 weeks per year
+                else:
+                    # Add more options as needed
+                    start_date = end_date
+                
+                start_dateo = start_date.strftime('%Y-%m-%d')
+                end_dateo = end_date.strftime('%Y-%m-%d')
+            
+            else:
+                start_date = request.form['start_date']
+                start_dateo = datetime.strptime(start_date, '%Y-%m-%d')
+                end_date = request.form['end_date']
+                end_dateo = datetime.strptime(end_date, '%Y-%m-%d')
+                
+            company_codes = request.form.getlist('company_codes[]')
+            stock_type = request.form['stock_type']
             
             combined_data = pd.DataFrame()
 
             for company_code in company_codes:
                 try:
                     stock_data = yf.download(company_code, start=start_dateo, end=end_dateo)
-                    combined_data[company_code] = stock_data['Close']
+                    combined_data[company_code] = stock_data[stock_type]
                 except Exception as e:
                     return f"Failed to fetch data for {company_code}: {e}"
 
             # Create an interactive Plotly graph
-            fig = px.line(combined_data, x=combined_data.index, y=combined_data.columns, labels={'value': 'Close'})
+            fig = px.line(combined_data, x=combined_data.index, y=combined_data.columns, labels={'value': stock_type})
             plot_div = fig.to_html(full_html=False)
 
             return render_template('graph.html', plot_div=plot_div)
