@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <!-- Include Bootstrap CSS -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -111,13 +112,11 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        
-        {% if plot_filenames %}
-            {% for plot_filename in plot_filenames %}
-                <img src="{{ plot_filename }}" alt="Stock Price Plot" class="img-fluid">
-            {% endfor %}
-        {% endif %}
-        
+        <div id="plotlyGraph">
+            {% if plot_div %}
+                {{ plot_div|safe }}
+            {% endif %}
+        </div>
     </div>
 
     <!-- Include Bootstrap JS and Popper.js -->

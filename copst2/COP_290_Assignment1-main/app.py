@@ -303,7 +303,7 @@ def process_dates():
             fig = px.line(combined_data, x=combined_data.index, y=combined_data.columns, labels={'value': stock_type})
             plot_div = fig.to_html(full_html=False)
 
-            return render_template('graph.html', plot_div=plot_div)
+            return render_template('home_page.html', plot_div=plot_div)
             
         else:
             return redirect(url_for('home_page'))
