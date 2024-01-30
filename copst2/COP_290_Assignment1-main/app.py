@@ -301,6 +301,11 @@ def process_dates():
 
             # Create an interactive Plotly graph
             fig = px.line(combined_data, x=combined_data.index, y=combined_data.columns, labels={'value': stock_type})
+            fig.update_layout(
+    height=900  # Set the width of the graph (in pixels)
+)
+
+            
             plot_div = fig.to_html(full_html=False)
 
             return render_template('home_page.html', plot_div=plot_div)
