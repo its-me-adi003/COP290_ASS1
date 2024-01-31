@@ -1,0 +1,120 @@
+<!-- buysell.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='buysell.css') }}">
+
+    <title>Buy/Sell Page</title>
+</head>
+<body>
+    <div class="taskbar">
+        <div class="section1">
+            <!-- <img src="logo.png"> -->
+        </div>
+        <div class="section2">
+            <h1>TradeHUB</h1>
+        </div>
+        <div class="section3">
+            <a href="{{ url_for('dashboard') }}">Home</a>
+            <a href="{{url_for('home_page')}}">Graph_Analysis</a>
+            <a href="{{ url_for('filter') }}">Filter</a> 
+            <!-- <a href="{{ url_for('buysell') }}">Buy/Sell</a>  -->
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h1>Buy/Sell Page</h1>
+        <h3>Current Balance: {{ user_balance|round(2) }}</h3>
+
+        <h3>Stocks Owned:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Company Symbol</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in user_stocks %}
+                    <tr>
+                        <td>{{ stock['company_name'] }}</td>
+                        <td>{{ stock['symbol'] }}</td>
+                        <td>{{ stock['amount'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Company Symbol</th>
+                    <th>Price</th>
+                    <th>Buy</th>
+                    <th>Sell</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stock_prices %}
+                    <tr>
+                        <td>{{ stock['company_name'] }}</td>
+                        <td>{{ stock['symbol'] }}</td>
+                        <td>{{ stock['current_price']|round(2) }}</td>
+                        <td>
+                            <!-- Buy form -->
+                            <form method="POST" action="{{ url_for('buysell') }}">
+                                <input type="hidden" name="transaction_type" value="buy">
+                                <input type="hidden" name="symbol" value="{{ stock['symbol'] }}">
+                                <input type="number" name="amount" placeholder="Enter Amount" required>
+                                <button type="submit" class="btn btn-success">Buy</button>
+                            </form>
+                        </td>
+                        <td>
+                            <!-- Sell form -->
+                            <form method="POST" action="{{ url_for('buysell') }}">
+                                <input type="hidden" name="transaction_type" value="sell">
+                                <input type="hidden" name="symbol" value="{{ stock['symbol'] }}">
+                                <input type="number" name="amount" placeholder="Enter Amount" required>
+                                <button type="submit" class="btn btn-danger">Sell</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        
+
+        <script>
+            function buyStock(symbol) {
+                // Additional logic for Buy action (if needed)
+                // For now, just showing input field
+                var amountInput = document.getElementById(symbol + '-amount');
+                amountInput.style.display = 'block';
+            }
+
+            function sellStock(symbol) {
+                // Additional logic for Sell action (if needed)
+                // For now, just showing input field
+                var amountInput = document.getElementById(symbol + '-amount');
+                amountInput.style.display = 'block';
+            }
+
+            function submitTransaction(symbol) {
+                // Add logic to handle the submission of the transaction
+                // For now, you can include the logic to send the form data to the server
+                var amountInput = document.getElementById(symbol + '-amount');
+                var amount = amountInput.value;
+                // You can now send 'symbol' and 'amount' to the server using a fetch or form submission
+                // For simplicity, you can use a form submission to a route that handles the transaction logic.
+                // Make sure to include CSRF protection in your forms for security.
+            }
+        </script>
+    </div>
+</body>
+</html>

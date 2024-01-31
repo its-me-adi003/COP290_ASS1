@@ -18,7 +18,8 @@
             <h1>TradeHUB</h1>
         </div>
         <div class="section3">
-            <a href="#" onclick="goBack()">Home</a>
+            <!-- <a href="#" onclick="goBack()">Home</a> -->
+            <a href="{{ url_for('dashboard') }}">Home</a>
             <a href="{{ url_for('home_page') }}">Graph Analysis</a>
             <a href="{{ url_for('filter') }}">Filter</a> 
             <a href="{{ url_for('logout') }}">Logout</a>

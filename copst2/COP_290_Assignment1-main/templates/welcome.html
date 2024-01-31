@@ -10,23 +10,21 @@
         <p><b><span class = "typing-text">"Charting your Path to Financial Success"</span></b></p>
   
     </div>
-  <div class="taskbar">
-    <div class="left-half">
-        <div class="organization">
-            <div class="image">
-            <img src="logo.png">
-            </div>
-            <span>TradeHUB</span>
+    <div class="taskbar">
+        <div class="section1">
+            <!-- <img src="logo.png"> -->
         </div>
-    </div>
-    <div class="right-half">
-        <div class="buttons">
-            <a href="{{ url_for('home_page') }}">Graph Analysis</a>
+        <div class="section2">
+            <h1>TradeHUB</h1>
+        </div>
+        <div class="section3">
+            <a href="{{ url_for('dashboard') }}">Home</a>
+            <a href="{{url_for('home_page')}}">Graph_Analysis</a>
             <a href="{{ url_for('filter') }}">Filter</a> 
+            <a href="{{ url_for('buysell') }}">Buy/Sell</a> 
             <a href="{{ url_for('logout') }}">Logout</a>
         </div>
     </div>
-</div>
    <div class="list-container">
         <h2>Nifty-50</h2>
         <ul>

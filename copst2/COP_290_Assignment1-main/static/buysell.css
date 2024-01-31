@@ -1,0 +1,128 @@
+/* buysell.css */
+
+body {
+    background-image: url('grey.jpg');
+    background-size: cover;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    padding: 120px;
+    border-radius: 10px;
+    top:0%;
+    margin-right: 0%;
+    margin-left: 0%;
+    text-align: center; /* Center-align content */
+}
+h1{
+    color: white
+}
+ h3 {
+    font-size: x-large;
+    color:#4CAF50 ; /* Green text */
+}
+
+/* Styling for tables */
+.table {
+    width: 70%; /* Adjust the width as needed */
+    margin: 0 auto; /* Center-align the table */
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+}
+
+.table th, .table td {
+    border: 1px solid white;
+}
+
+/* Styling for Buy button */
+.btn-success {
+    background-color: #4CAF50; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Styling for Sell button */
+.btn-danger {
+    background-color: #FF6347; /* Red button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Spacing for the second table */
+.table-spacing {
+    margin-top: 20px;
+}
+
+.taskbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    background-color:black; /* Example background color */
+    padding: 20px; /* Adjust padding as needed */
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+}
+
+.section1 {
+     flex: 1;/* Takes up available space */
+    /* padding-left: 200px; */
+    height: 140px;
+    width: 300px;
+    background-repeat: no-repeat;
+    background-image: url('logo.png');
+    background-size: contain; /* Adjust as needed */
+}
+
+.section2 {
+    flex: 1; 
+    text-align: center; /* Align content in the center */
+    /* font-size: x-large; */
+    height: 200px;
+    width: 500px;
+}
+.section2 h1
+{
+    text-align: left;
+    font-size: 70px;
+    font-style: italic;
+    color: azure;
+    /* height: 200px; */
+}
+
+.section3 {
+    flex: 1; /* Takes up available space */
+    text-align: right; /* Align content to the right */
+    /* position: fixed; */
+    right: 0%;
+}
+
+.section3 a {
+    margin-left: 15px; /* Adjust spacing between links */
+    margin-right:40px ;
+    text-decoration: none;
+    font-size: x-large;
+    color: white;
+}

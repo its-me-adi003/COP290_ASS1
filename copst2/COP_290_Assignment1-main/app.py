@@ -8,6 +8,9 @@ import pandas as pd
 from datetime import datetime
 import matplotlib
 from datetime import timedelta
+from sqlalchemy.orm.exc import NoResultFound
+
+
 matplotlib.use('Agg')
 
 
@@ -24,14 +27,45 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
+    balance = db.Column(db.Float, default=1000.0)  # Add this line for the balance column
+
+class Transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    symbol = db.Column(db.String(10), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    transaction_type = db.Column(db.String(5), nullable=False)  # 'buy' or 'sell'
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
 
 # Initialize Database within Application Context
 with app.app_context():
     db.create_all()
 
+    db.session.commit()
+
+
+
+
+
+
+
 @app.route('/')
 def index():
     return render_template('login.html')
+
+
+
+
+@app.route('/welcome')
+def welcome():
+    if 'user_id' in session:
+        
+        return render_template('welcome.html', username=session['username'])
+    else:
+        return redirect(url_for('index'))
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -95,8 +129,8 @@ def dashboard():
         symbol_list = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'SBIN.NS', 'SBILIFE.NS']
         
         # Get top gaining and losing companies
-        top_gaining_companies = get_top_companies(symbol_list, lookback_period='5d', get_gainers=True)
-        top_losing_companies = get_top_companies(symbol_list, lookback_period='5d', get_gainers=False)
+        top_gaining_companies = get_top_companies(symbol_list, lookback_period='4d', get_gainers=False)
+        top_losing_companies = get_top_companies(symbol_list, lookback_period='4d', get_gainers=True)
         #print(top_gaining_companies)
         return render_template('welcome.html', username=session['username'],top_gaining_companies=top_gaining_companies,top_losing_companies=top_losing_companies)
     else:
@@ -109,11 +143,17 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
+# Update the route to in
+# clude company options
 @app.route('/home_page')
 def home_page():
-    return render_template('home_page.html')
+    if 'user_id' in session:
+        return render_template('home_page.html')
+    else:
+        return redirect(url_for('index'))
 
-def filter_by_average_price(symbol, min_avg_price, max_avg_price, lookback_period='1y'):
+
+def filter_by_average_price(symbol, min_avg_price, max_avg_price, lookback_period='1mo'):
     try:
         # Get historical data from Yahoo Finance
         historical_data = yf.download(symbol, period=lookback_period)
@@ -288,6 +328,11 @@ def process_dates():
                 end_dateo = datetime.strptime(end_date, '%Y-%m-%d')
                 
             company_codes = request.form.getlist('company_codes[]')
+           
+            
+            
+            
+            
             stock_type = request.form['stock_type']
             
             combined_data = pd.DataFrame()
@@ -301,13 +346,10 @@ def process_dates():
 
             # Create an interactive Plotly graph
             fig = px.line(combined_data, x=combined_data.index, y=combined_data.columns, labels={'value': stock_type})
-            fig.update_layout(
-    height=900  # Set the width of the graph (in pixels)
-)
-
-            
+            fig.update_layout(height = 900)
             plot_div = fig.to_html(full_html=False)
-
+            
+            
             return render_template('home_page.html', plot_div=plot_div)
             
         else:
@@ -316,6 +358,125 @@ def process_dates():
         return redirect(url_for('index'))
     
     
+@app.route('/buysell', methods=['GET', 'POST'])
+def buysell():
+    if 'user_id' in session:
+        # Fetch user data
+        user = User.query.get(session['user_id'])
+
+        if request.method == 'POST':
+            symbol = request.form['symbol']
+            amount = float(request.form['amount'])
+            transaction_type = request.form['transaction_type']
+
+            # Fetch stock information
+            stock_info = yf.Ticker(symbol)
+            current_price = stock_info.history(period='1d')['Close'].iloc[-1]
+            transaction_cost = current_price * amount
+
+            if transaction_type == 'buy' and user.balance < transaction_cost:
+                flash('Insufficient balance!')
+                return redirect(url_for('buysell'))
+
+            # Execute the transaction
+            if transaction_type == 'buy':
+                # Deduct the amount from the user's balance
+                user.balance -= transaction_cost
+                print(user.balance)
+                # Record the buy transaction
+                buy_transaction = Transaction(user_id=user.id, symbol=symbol, amount=amount, transaction_type='buy')
+                db.session.add(buy_transaction)
+            elif transaction_type == 'sell':
+                try:
+                    # Try to find the user's stock of the given symbol
+                    user_stock_buy = Transaction.query.filter_by(user_id=user.id, symbol=symbol, transaction_type='buy').first()
+
+                    if user_stock_buy and user_stock_buy.amount >= amount:
+                        # Calculate the amount to add to the user's balance
+                        sell_transaction_cost = current_price * amount
+                        user.balance += sell_transaction_cost
+
+                        # Record the sell transaction
+                        sell_transaction = Transaction(user_id=user.id, symbol=symbol, amount=amount, transaction_type='sell')
+                        db.session.add(sell_transaction)
+
+                        # Update the user's stock amount
+                        user_stock_buy.amount -= amount
+
+                        # If the user sold all the stocks, delete the 'buy' record
+                        if user_stock_buy.amount == 0:
+                            db.session.delete(user_stock_buy)
+
+                        flash(f'Transaction successful! {transaction_type.capitalize()} {amount} shares of {symbol}.')
+                    elif user_stock_buy and user_stock_buy.amount < amount:
+                        flash(f'Not enough stocks to sell!')
+                    else:
+                        flash(f"Couldn't find stocks of {symbol}.")
+                except NoResultFound:
+                    flash(f"Couldn't find stocks of {symbol}.")
+                    
+            # Commit changes to the database
+            db.session.commit()
+
+            return redirect(url_for('buysell'))
+
+        # If it's a GET request, fetch stock prices and user's stocks for display
+        company_symbols = ['AAPL', 'GOOGL', 'MSFT', 'AMZN']
+        stock_prices = get_stock_prices(company_symbols)
+
+        # Fetch user's stocks
+        user_stocks = get_user_stocks(session['user_id'])
+
+        return render_template('buysell.html', user_balance=user.balance, stock_prices=stock_prices, user_stocks=user_stocks)
+    else:
+        return redirect(url_for('index'))
+
+def get_stock_prices(symbols):
+    stock_prices = []
+
+    for symbol in symbols:
+        try:
+            # Fetch stock information
+            stock_info = yf.Ticker(symbol)
+            
+            # Get the current stock price
+            current_price = stock_info.history(period='1d')['Close'].iloc[-1]
+
+            # Append the data to the list
+            stock_prices.append({
+                'symbol': symbol,
+                'company_name': get_company_name(symbol),  # You need to implement this function
+                'current_price': current_price
+            })
+        except Exception as e:
+            print(f"Error fetching data for {symbol}: {e}")
+
+    return stock_prices
+
+def get_company_name(symbol):
+    # You need to implement this function to get the company name based on the symbol
+    # For now, it returns the symbol as a placeholder
+    return symbol
+
+
+def get_user_stocks(user_id):
+    # Query the database to get the user's stocks
+    user_stocks_query = Transaction.query.filter_by(user_id=user_id, transaction_type='buy').all()
+
+    # Process the query results into the desired format
+    user_stocks = {}
+
+    for stock in user_stocks_query:
+        if stock.symbol not in user_stocks:
+            user_stocks[stock.symbol] = {
+                'company_name': get_company_name(stock.symbol),  # You need to implement this function
+                'symbol': stock.symbol,
+                'amount': 0,
+            }
+
+        user_stocks[stock.symbol]['amount'] += stock.amount
+
+    return list(user_stocks.values())
 
 
 if __name__ == '__main__':

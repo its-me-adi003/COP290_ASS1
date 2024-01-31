@@ -1,0 +1,137 @@
+body {
+    font-family: 'Arial', sans-serif;
+   background-image: url('grey.jpg');
+     /* background-image: url('stock4.jpg'); */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0;
+}
+
+
+.taskbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    background-color:rgba(0, 0, 0, 0.667); /* Example background color */
+    padding: 20px; /* Adjust padding as needed */
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
+}
+
+.section1 {
+    flex: 1;/* Takes up available space */
+   /* padding-left: 200px; */
+   height: 140px;
+   width: 300px;
+   background-repeat: no-repeat;
+   background-image: url('logo.png');
+   background-size: contain; /* Adjust as needed */
+}
+
+.section2 {
+    flex: 1; 
+    text-align: center; /* Align content in the center */
+    /* font-size: x-large; */
+    height: 200px;
+    width: 500px;
+}
+.section2 h1
+{
+    text-align: left;
+    font-size: 70px;
+    font-style: italic;
+    color: azure;
+    /* height: 200px; */
+}
+
+.section3 {
+    flex: 1; /* Takes up available space */
+    text-align: right; /* Align content to the right */
+    /* position: fixed; */
+    right: 0%;
+}
+
+.section3 a {
+    margin-left: 15px; /* Adjust spacing between links */
+    margin-right:40px ;
+    font-size: x-large;
+    color: white;
+}
+.btn.btn-primary {
+    background-color: #4CAF50; /* Green background color */
+    border-color: #4CAF50; /* Green border color */
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Cursor style on hover */
+    margin-top: 50px;
+    margin-bottom: 200px;
+}
+
+/* Hover effect */
+
+.btn.btn-primary:hover {
+    background-color: #45a049; /* Darker green background color */
+    border-color: #45a049; /* Darker green border color */
+}
+.container {
+    width: 100%; /* Set maximum width for the container */
+    margin: 0 auto; /* Center the container on the page */
+    background-color:rgba(0, 0, 0, 0.4);
+    height: 1100px;
+    top:130px;
+    position: absolute;
+    right: 0%;
+    text-align: center;
+}
+.container h1
+{
+    color:aqua;
+    font-size: xx-large;
+    font-weight: 400;
+    font-style: italic;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.container label
+{
+    color:blanchedalmond; /* Set label text color to white */
+    font-size:x-large;
+    margin-bottom: 300px;
+}
+.form-check label {
+    color:blanchedalmond; /* Set label text color to white */
+    font-size:40px;
+    margin-bottom: 100px;
+
+}
+.form-check {
+    margin-bottom: 50px;
+}
+.form-group
+{
+    margin-bottom: 20px;
+}
+
+.table th
+{
+    color:khaki;
+    font-size: larger;
+    /* padding-left: 40%; */
+}
+table.table{
+    padding-left: 30%;
+    padding-right: 30%;
+}
+table.table td{
+    color: khaki;
+    font-size: 30px;
+}
+

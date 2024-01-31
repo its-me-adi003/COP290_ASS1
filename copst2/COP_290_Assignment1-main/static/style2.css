@@ -1,7 +1,7 @@
 /* style.css */
 body {
     font-family: 'Arial', sans-serif;
-  /*  background-image: url('stock3.jpg');*/
+     /* background-image: url('stock6.jpg'); */
      background-image: url('stock4.jpg');
     background-size: cover;
     background-position: center;
@@ -43,7 +43,7 @@ body {
     max-width: 600px;
    /* margin: 50px auto;*/ /* Center align */
    position: absolute;
-    left: 20px; /* Adjust as needed */
+    left: 600px; /* Adjust as needed */
     top: 15%; /* Adjust as needed */
     padding: 30px;
     text-align: center; /* Align contents to the center */
@@ -100,50 +100,74 @@ a:hover {
 
 /*   taskbar*/
 
-.taskbar {
-    /*background-color:transparent; /* Change as needed */
-    background-color:rgba(0, 0, 0, 0.667); /* Change as needed */
-    padding: 50px;
+body {
+    font-family: 'Arial', sans-serif;
+   background-image: url('grey.jpg');
+     /* background-image: url('stock4.jpg'); */
+    background-size: cover;
+    background-position: center;
     display: flex;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0;
+}
+
+
+.taskbar {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed; /* Fix the position */
-    top: 0; /* Stick it to the top */
-  }
-  
-  .organization {
-    display: flex;
-    align-items: left;
-  }
-  
-  
-  .organization span {
-    font-size: 80px; /* Adjust size as needed */
-    color: #ffffff;
-    padding-left: 60%;
-    font-family:Arial, Helvetica, sans-serif;
+    height: 100px;
+    background-color:black; /* Example background color */
+    padding: 20px; /* Adjust padding as needed */
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    right: 0;
+}
+
+.section1 {
+     flex: 1;/* Takes up available space */
+    /* padding-left: 200px; */
+    height: 140px;
+    width: 300px;
+    background-repeat: no-repeat;
+    background-image: url('logo.png');
+    background-size: contain; /* Adjust as needed */
+}
+
+.section2 {
+    flex: 1; 
+    text-align: center; /* Align content in the center */
+    /* font-size: x-large; */
+    height: 200px;
+    width: 500px;
+}
+.section2 h1
+{
+    text-align: left;
+    font-size: 70px;
     font-style: italic;
-    text-shadow: 5px 5px 8px rgba(0, 0, 0, 0.563);
-  }
-  .image
-  {
-    width: 200px;
-    height: auto;
-       margin-right: 20px;
-  }
- 
-  .buttons {
-    display: flex;
-  }
-  
-  .buttons a {
+    color: azure;
+    /* height: 200px; */
+}
+
+.section3 {
+    flex: 1; /* Takes up available space */
+    text-align: right; /* Align content to the right */
+    /* position: fixed; */
+    right: 0%;
+}
+
+.section3 a {
+    margin-left: 15px; /* Adjust spacing between links */
+    margin-right:40px ;
     text-decoration: none;
-    font-size:x-large ;
-    color:white; /* Change as needed */
-   /* padding: 10px 10px; /* Adjust padding as needed */
-    margin-right: 50px; /* Adjust spacing between buttons */
-  }
+    font-size: x-large;
+    color: white;
+}
   
   /* .buttons a:hover {
     color: #0056b3; 
@@ -154,11 +178,11 @@ a:hover {
 
    .list-container {
     position: absolute;
-    margin-top: 45%;
+    margin-top: 44%;
     right: 0;
     width: 17%; /* Adjust the width as needed */
     padding: 20px;
-    background-color:rgba(0, 0, 0, 0.4); /* Transparent white background */
+    background-color:black; /* Transparent white background */
     color: white; /* White text */
     font-size: 16px; /* Default font size */
     font-family: Arial, sans-serif; /* Default font family */
@@ -172,14 +196,16 @@ a:hover {
 .list-container ul {
     list-style-type: none; /* Remove bullet points */
     padding: 0;
-    
+    text-decoration: none;
     font-size: x-large;
 }
 .list-container ul li {
+    text-decoration: none;
     margin-bottom: 10px;
    
 }
 .list-container ul li a {
+    text-decoration: none;
     color: white;
    
 }
@@ -193,9 +219,10 @@ a:hover {
 
 .toppers {
     position: absolute;
-    top: 800px; /* Adjust as needed */
+    top: 650px; /* Adjust as needed */
     left: 20px; /* Adjust as needed */
-    color: black; /* Font color (dark gray) */
+    color:black; /* Font color (dark gray) */
+    font-weight: bolder;
     font-family: Arial, sans-serif; /* Default font family */
     font-size: large;
     width: 100%;
@@ -213,6 +240,7 @@ a:hover {
 }
 .top-gaining-item {
     display: inline-block;
+    background: url('increase.jpg') no-repeat center center/cover;
     width: 200px; /* Adjust width as needed */
     height: 200px;
     margin-right: 40px; /* Adjust spacing between items */
@@ -233,9 +261,10 @@ a:hover {
 
 .losers {
     position: absolute;
-    top: 1300px; /* Adjust as needed */
+    top: 1100px; /* Adjust as needed */
     left: 20px; /* Adjust as needed */
-    color: black; /* Font color (dark gray) */
+    font-weight: bolder;
+    color:black; /* Font color (dark gray) */
     font-family: Arial, sans-serif; /* Default font family */
     font-size: large;
     width: 100%;
@@ -255,6 +284,7 @@ a:hover {
     display: inline-block;
     width: 200px; /* Adjust width as needed */
     height: 200px;
+    background: url('decrease.jpg') no-repeat center center/cover;
     margin-right: 40px; /* Adjust spacing between items */
     background-color:blanchedalmond; /* Background color for each item */
     padding: 10px;

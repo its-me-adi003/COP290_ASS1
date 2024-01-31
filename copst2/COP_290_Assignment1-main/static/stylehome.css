@@ -17,11 +17,11 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 100px;
-    background-color:rgba(0, 0, 0, 0.667); /* Example background color */
+    background-color:black; /* Example background color */
     padding: 20px; /* Adjust padding as needed */
     width: 100%;
     position: fixed;
-    top: 25px;
+    top: 0px;
     left: 0;
     right: 0;
 }
@@ -75,7 +75,7 @@ body {
     margin: 0 auto; /* Center the container on the page */
     background-color:rgba(0, 0, 0, 0.4);
     height: 1100px;
-    top:150px;
+    top:130px;
     position: absolute;
     right: 0%;
     text-align: center;
