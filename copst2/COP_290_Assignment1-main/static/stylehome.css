@@ -1,7 +1,7 @@
 body {
     font-family: 'Arial', sans-serif;
   /*  background-image: url('stock3.jpg');*/
-     background-image: url('stock4.jpg');
+     background-image: url('candle.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -63,6 +63,7 @@ body {
     margin-left: 15px; /* Adjust spacing between links */
     margin-right:40px ;
     font-size: x-large;
+    text-decoration: none;
     color: white;
 }
 

@@ -21,15 +21,15 @@
             <a href="{{ url_for('dashboard') }}">Home</a>
             <a href="{{url_for('home_page')}}">Graph_Analysis</a>
             <a href="{{ url_for('filter') }}">Filter</a> 
-            <!-- <a href="{{ url_for('buysell') }}">Buy/Sell</a>  -->
+            <a href="{{ url_for('buysell') }}">Buy/Sell</a> 
             <a href="{{ url_for('logout') }}">Logout</a>
         </div>
     </div>
     <div class="container mt-5">
-        <h1>Buy/Sell Page</h1>
+     
         <h3>Current Balance: {{ user_balance|round(2) }}</h3>
 
-        <h3>Stocks Owned:</h3>
+        <h2>Stocks Owned:</h2>
         <table class="table">
             <thead>
                 <tr>
@@ -48,7 +48,7 @@
                 {% endfor %}
             </tbody>
         </table>
-
+        <h2>Buy/Sell</h2>
         <table class="table">
             <thead>
                 <tr>

@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +21,7 @@
         }
     </script>
 </head>
+
 <body>
     <div class="taskbar">
         <div class="section1">
@@ -29,10 +31,10 @@
             <h1>TradeHUB</h1>
         </div>
         <div class="section3">
-            <!-- <a href="{{ url_for('home_page') }}">Home</a> -->
+            <a href="{{ url_for('dashboard') }}">Home</a>
             <a href="{{url_for('home_page')}}">Graph_Analysis</a>
-            <!-- <a href="#" onclick="goBack()">Graph_Analysis</a> -->
-            <a href="{{ url_for('filter') }}">Filter</a> 
+            <a href="{{ url_for('filter') }}">Filter</a>
+            <a href="{{ url_for('buysell') }}">Buy/Sell</a>
             <a href="{{ url_for('logout') }}">Logout</a>
         </div>
     </div>
@@ -43,11 +45,13 @@
             <div class="form-group">
                 <h1>Filter Options:</h1>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="pe_ratio_checkbox" id="pe_ratio_checkbox" onchange="toggleMinMaxFields()">
+                    <input class="form-check-input" type="checkbox" name="pe_ratio_checkbox" id="pe_ratio_checkbox"
+                        onchange="toggleMinMaxFields()">
                     <label class="form-check-label" for="pe_ratio_checkbox">P/E Ratio</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="avg_price_checkbox" id="avg_price_checkbox" onchange="toggleMinMaxFields()">
+                    <input class="form-check-input" type="checkbox" name="avg_price_checkbox" id="avg_price_checkbox"
+                        onchange="toggleMinMaxFields()">
                     <label class="form-check-label" for="avg_price_checkbox">Average Price</label>
                 </div>
             </div>
@@ -83,29 +87,31 @@
                 window.history.back();
             }
         </script>
-        {% if filtered_stocks %}
-            <h2>Filtered Stocks:</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Symbol</th>
-                        <th>Company Name</th>
-                        <th>P/E Ratio</th>
-                        <th>Average Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for stock in filtered_stocks %}
-                        <tr>
-                            <td>{{ stock['symbol'] }}</td>
-                            <td>{{ stock['company_name'] }}</td>
-                            <td>{{ stock['pe_ratio'] }}</td>
-                            <td>{{ stock['avg_price'] }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
     </div>
+    {% if filtered_stocks %}
+    <table class="table">
+        <!-- <h2>Filtered Stocks:</h2> -->
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Company Name</th>
+                <th>P/E Ratio</th>
+                <th>Average Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in filtered_stocks %}
+            <tr>
+                <td>{{ stock['symbol'] }}</td>
+                <td>{{ stock['company_name'] }}</td>
+                <td>{{ stock['pe_ratio'] }}</td>
+                <td>{{ stock['avg_price'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
 </body>
+
 </html>
