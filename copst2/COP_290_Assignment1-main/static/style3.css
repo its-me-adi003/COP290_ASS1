@@ -1,16 +1,4 @@
 /* style.css */
-body {
-    font-family: 'Arial', sans-serif;
-   
-     background-image: url('candle.jpg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
 
 
 
@@ -92,8 +80,8 @@ a:hover {
 
 body {
     font-family: 'Arial', sans-serif;
-   background-image: url('grey.jpg');
-     /* background-image: url('stock4.jpg'); */
+   /* background-image: url('candle.jpg'); */
+     background-image: url('stock6.png');
     background-size: cover;
     background-position: center;
     display: flex;

@@ -2,7 +2,7 @@
 body {
     font-family: 'Arial', sans-serif;
    
-     background-image: url('candle.jpg');
+     background-image: url('stock6.png');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -90,18 +90,7 @@ a:hover {
 
 /*   taskbar*/
 
-body {
-    font-family: 'Arial', sans-serif;
-   background-image: url('grey.jpg');
-     /* background-image: url('stock4.jpg'); */
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-    margin: 0;
-}
+
 
 
 .taskbar {
