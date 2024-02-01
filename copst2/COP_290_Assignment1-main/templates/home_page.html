@@ -1,4 +1,4 @@
-<!-- home_page.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylehome.css') }}">
-    <!-- Include Bootstrap CSS -->
+    
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
+       <!-- the taskbar is divided into 3 sections:-
+     leftmost for company logo
+     central for companys name
+     rightmost for the links to different pages -->
     <div class="taskbar">
         <div class="section1">
             <!-- <img src="logo.png"> -->
@@ -19,7 +23,7 @@
         </div>
         <div class="section3">
             <a href="{{ url_for('dashboard') }}">Home</a>
-            <a href="{{url_for('home_page')}}">Graph_Analysis</a>
+            <a href="{{url_for('home_page')}}">Graph Analysis</a>
             <a href="{{ url_for('filter') }}">Filter</a> 
             <a href="{{ url_for('buysell') }}">Buy/Sell</a> 
             <a href="{{ url_for('logout') }}">Logout</a>
@@ -27,7 +31,7 @@
     </div>
     <div class="container mt-5">
         <!-- <h1>Welcome to Your Home Page</h1> -->
-        <p>Explore and manage your tasks.</p>
+        <p>Explore and Analyze your stocks.</p>
 
         <!-- Form for Start Date, End Date, and Company Code -->
         <form action="{{ url_for('process_dates') }}" method="post">
@@ -36,7 +40,7 @@
                 <label class="form-check-label" for="timeRangeCheckbox">Enter Time Range</label>
             </div>
     
-            <!-- Fields for precise date -->
+            <!--start date and end date box-->
             <div class="form-group" id="preciseDateFields1">
                 <label for="start_date">Start Date:</label>
                 <input type="date" class="form-control" id="start_date" name="start_date">
@@ -46,7 +50,7 @@
                 <input type="date" class="form-control" id="end_date" name="end_date">
             </div>
     
-            <!-- Fields for time range -->
+            <!--time range -->
             <div class="form-group" id="timeRangeFields" style="display: none;">
                 <label for="time_range">Select Time Range:</label>
                 <select name="time_range" id="time_range" class="form-control">
@@ -57,7 +61,7 @@
                     <option value="yearly10">Last 10 Years</option>
                 </select>
             </div>
-
+           <!-- list of companies -->
             <div class="form-group">
                 <label for="company_codes">Select Companies:</label>
                 <select multiple class="form-control" id="company_codes" name="company_codes[]" required>
@@ -114,7 +118,7 @@
 
                 </select>
             </div>
-            
+            <!-- basis of graph -->
             <div class="form-group">
                 <label for="stock_type">Stock Type:</label>
                 <select class="form-control" id="stock_type" name="stock_type" required>
@@ -134,12 +138,13 @@
             {% endif %}
         </div> -->
     </div>
+    <!-- graph starts -->
     <div id="plotlyGraph">
         {% if plot_div %}
             {{ plot_div|safe }}
         {% endif %}
     </div>
-    <!-- Include Bootstrap JS and Popper.js -->
+    
     <script>
         function goBack() {
             window.history.back();
@@ -160,28 +165,28 @@
                 preciseDateFields1.style.display = 'none';
                 preciseDateFields2.style.display = 'none';
                 timeRangeFields.style.display = 'block';
-                startDateInput.value = ''; // Clear the value when hiding
-                endDateInput.value = '';   // Clear the value when hiding
+                startDateInput.value = ''; 
+                endDateInput.value = '';  
             } else {
                 preciseDateFields1.style.display = 'block';
                 preciseDateFields2.style.display = 'block';
                 timeRangeFields.style.display = 'none';
-                timeRangeSelect.value = ''; // Clear the value when hiding
+                timeRangeSelect.value = ''; 
             }
         });
 
-        // Initial setup based on checkbox state
+        
         if (timeRangeCheckbox.checked) {
             preciseDateFields1.style.display = 'none';
             preciseDateFields2.style.display = 'none';
             timeRangeFields.style.display = 'block';
-            startDateInput.value = ''; // Clear the value when hiding
-            endDateInput.value = '';   // Clear the value when hiding
+            startDateInput.value = ''; 
+            endDateInput.value = '';   
         } else {
             preciseDateFields1.style.display = 'block';
             preciseDateFields2.style.display = 'block';
             timeRangeFields.style.display = 'none';
-            timeRangeSelect.value = ''; // Clear the value when hiding
+            timeRangeSelect.value = ''; 
         }
     </script>
 </body>

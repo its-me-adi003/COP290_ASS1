@@ -455,12 +455,68 @@ def get_stock_prices(symbols):
 
     return stock_prices
 
+# def get_company_name(symbol):
+#     # You need to implement this function to get the company name based on the symbol
+#     # For now, it returns the symbol as a placeholder
+    
+#     return symbol
+
 def get_company_name(symbol):
-    # You need to implement this function to get the company name based on the symbol
-    # For now, it returns the symbol as a placeholder
-    return symbol
-
-
+    # Dictionary mapping symbols to full company names
+    company_names = {
+        "ADANIENT.NS": "Adani Enterprises Limited",
+        "ADANIPORTS.NS": "Adani Ports and Special Economic Zone Limited",
+        "APOLLOHOSP.NS": "Apollo Hospitals Enterprise Limited",
+        "ASIANPAINT.NS": "Asian Paints Limited",
+        "AXISBANK.NS": "Axis Bank Limited",
+        "BAJAJ-AUTO.NS": "Bajaj Auto Limited",
+        "BAJFINANCE.NS": "Bajaj Finance Limited",
+        "BAJAJFINSV.NS": "Bajaj Finserv Limited",
+        "BPCL.NS": "Bharat Petroleum Corporation Limited",
+        "BHARTIARTL.NS": "Bharti Airtel Limited",
+        "BRITANNIA.NS": "Britannia Industries Limited",
+        "CIPLA.NS": "Cipla Limited",
+        "COALINDIA.NS": "Coal India Limited",
+        "DIVISLAB.NS": "Divi's Laboratories Limited",
+        "DRREDDY.NS": "Dr. Reddy's Laboratories Limited",
+        "EICHERMOT.NS": "Eicher Motors Limited",
+        "GRASIM.NS": "Grasim Industries Limited",
+        "HCLTECH.NS": "HCL Technologies Limited",
+        "HDFCBANK.NS": "HDFC Bank Limited",
+        "HDFCLIFE.NS": "HDFC Life Insurance Company Limited",
+        "HEROMOTOCO.NS": "Hero MotoCorp Limited",
+        "HINDALCO.NS": "Hindalco Industries Limited",
+        "HINDUNILVR.NS": "Hindustan Unilever Limited",
+        "ICICIBANK.NS": "ICICI Bank Limited",
+        "ITC.NS": "ITC Limited",
+        "INDUSINDBK.NS": "IndusInd Bank Limited",
+        "INFY.NS": "Infosys Limited",
+        "JSWSTEEL.NS": "JSW Steel Limited",
+        "KOTAKBANK.NS": "Kotak Mahindra Bank Limited",
+        "LTIM.NS": "Larsen & Toubro Infotech Limited",
+        "LT.NS": "Larsen & Toubro Limited",
+        "MARUTI.NS": "Maruti Suzuki India Limited",
+        "NTPC.NS": "NTPC Limited",
+        "NESTLEIND.NS": "Nestle India Limited",
+        "ONGC.NS": "Oil and Natural Gas Corporation Limited",
+        "POWERGRID.NS": "Power Grid Corporation of India Limited",
+        "RELIANCE.NS": "Reliance Industries Limited",
+        "SBILIFE.NS": "SBI Life Insurance Company Limited",
+        "SBIN.NS": "State Bank of India",
+        "SUNPHARMA.NS": "Sun Pharmaceutical Industries Limited",
+        "TCS.NS": "Tata Consultancy Services Limited",
+        "TATACONSUM.NS": "Tata Consumer Products Limited",
+        "TATAMOTORS.NS": "Tata Motors Limited",
+        "TATASTEEL.NS": "Tata Steel Limited",
+        "TECHM.NS": "Tech Mahindra Limited",
+        "TITAN.NS": "Titan Company Limited",
+        "UPL.NS": "UPL Limited",
+        "ULTRACEMCO.NS": "UltraTech Cement Limited",
+        "WIPRO.NS": "Wipro Limited"
+    }
+    return company_names.get(symbol, "Unknown")
+    
+    # Return the company name based on the symbol
 def get_user_stocks(user_id):
     # Query the database to get the user's stocks
     user_stocks_query = Transaction.query.filter_by(user_id=user_id, transaction_type='buy').all()

@@ -14,7 +14,7 @@ body {
     top:0%;
     margin-right: 0%;
     margin-left: 0%;
-    text-align: center; /* Center-align content */
+    text-align: center; 
 }
 h2{
     color: white;
@@ -23,13 +23,13 @@ h2{
 }
  h3 {
     font-size: 40px;
-    color:gold; /* Green text */
+    color:gold; 
 }
 
 /* Styling for tables */
 .table {
-    width: 90%; /* Adjust the width as needed */
-    margin: 0 auto; /* Center-align the table */
+    width: 90%; 
+    margin: 0 auto; 
     background-color: black;
     color: white;
     border: 1px solid white;
@@ -41,9 +41,9 @@ h2{
 }
 
 
-/* Styling for Buy button */
+/* Buy button */
 .btn-success {
-    background-color: #4CAF50; /* Green button */
+    background-color: #4CAF50; 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -56,9 +56,9 @@ h2{
     border-radius: 5px;
 }
 
-/* Styling for Sell button */
+/* Sell button */
 .btn-danger {
-    background-color: #FF6347; /* Red button */
+    background-color: #FF6347; 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -71,7 +71,7 @@ h2{
     border-radius: 5px;
 }
 
-/* Spacing for the second table */
+
 .table-spacing {
     margin-top: 20px;
 }
@@ -81,8 +81,8 @@ h2{
     justify-content: space-between;
     align-items: center;
     height: 100px;
-    background-color:black; /* Example background color */
-    padding: 20px; /* Adjust padding as needed */
+    background-color:black; 
+    padding: 20px; 
     width: 100%;
     position: absolute;
     top: 0px;
@@ -91,18 +91,18 @@ h2{
 }
 
 .section1 {
-     flex: 1;/* Takes up available space */
+     flex: 1;
     /* padding-left: 200px; */
     height: 140px;
     width: 300px;
     background-repeat: no-repeat;
     background-image: url('logo.png');
-    background-size: contain; /* Adjust as needed */
+    background-size: contain; 
 }
 
 .section2 {
     flex: 1; 
-    text-align: center; /* Align content in the center */
+    text-align: center; 
     /* font-size: x-large; */
     height: 200px;
     width: 500px;
@@ -117,14 +117,14 @@ h2{
 }
 
 .section3 {
-    flex: 1; /* Takes up available space */
-    text-align: right; /* Align content to the right */
+    flex: 1; 
+    text-align: right; 
     /* position: fixed; */
     right: 0%;
 }
 
 .section3 a {
-    margin-left: 15px; /* Adjust spacing between links */
+    margin-left: 15px; 
     margin-right:20px ;
     text-decoration: none;
     font-size: x-large;

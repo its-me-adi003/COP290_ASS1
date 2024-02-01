@@ -10,6 +10,10 @@
     <title>Buy/Sell Page</title>
 </head>
 <body>
+    <!-- the taskbar is divided into 3 sections:-
+     leftmost for company logo
+     central for companys name
+     rightmost for the links to different pages -->
     <div class="taskbar">
         <div class="section1">
             <!-- <img src="logo.png"> -->
@@ -19,7 +23,7 @@
         </div>
         <div class="section3">
             <a href="{{ url_for('dashboard') }}">Home</a>
-            <a href="{{url_for('home_page')}}">Graph_Analysis</a>
+            <a href="{{url_for('home_page')}}">Graph Analysis</a>
             <a href="{{ url_for('filter') }}">Filter</a> 
             <a href="{{ url_for('buysell') }}">Buy/Sell</a> 
             <a href="{{ url_for('logout') }}">Logout</a>
@@ -28,7 +32,7 @@
     <div class="container mt-5">
      
         <h3>Current Balance: {{ user_balance|round(2) }}</h3>
-
+        <!-- this part is to display the stocks and related data whoch are bought by the user -->
         <h2>Stocks Owned:</h2>
         <table class="table">
             <thead>
@@ -48,6 +52,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <!-- this part if for the buying or selling table -->
         <h2>Buy/Sell</h2>
         <table class="table">
             <thead>
@@ -89,30 +94,25 @@
         </table>
 
         
-
+        <!-- this part is for updating the values after buying or selling -->
         <script>
             function buyStock(symbol) {
-                // Additional logic for Buy action (if needed)
-                // For now, just showing input field
+        
                 var amountInput = document.getElementById(symbol + '-amount');
                 amountInput.style.display = 'block';
             }
 
             function sellStock(symbol) {
-                // Additional logic for Sell action (if needed)
-                // For now, just showing input field
+                
                 var amountInput = document.getElementById(symbol + '-amount');
                 amountInput.style.display = 'block';
             }
 
             function submitTransaction(symbol) {
-                // Add logic to handle the submission of the transaction
-                // For now, you can include the logic to send the form data to the server
+  
                 var amountInput = document.getElementById(symbol + '-amount');
                 var amount = amountInput.value;
-                // You can now send 'symbol' and 'amount' to the server using a fetch or form submission
-                // For simplicity, you can use a form submission to a route that handles the transaction logic.
-                // Make sure to include CSRF protection in your forms for security.
+                
             }
         </script>
     </div>

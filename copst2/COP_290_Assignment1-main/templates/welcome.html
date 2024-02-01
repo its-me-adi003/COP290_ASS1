@@ -5,11 +5,16 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style3.css') }}">
 </head>
 <body>
+    <!-- the central part -->
     <div class="welcome-container">
         <h1>Welcome, {{ username }}!</h1>
         <p><b><span class = "typing-text">"Charting your Path to Financial Success"</span></b></p>
   
     </div>
+    <!-- the taskbar is divided into 3 sections:-
+     leftmost for company logo
+     central for companys name
+     rightmost for the links to different pages -->
     <div class="taskbar">
         <div class="section1">
             <!-- <img src="logo.png"> -->
@@ -19,12 +24,13 @@
         </div>
         <div class="section3">
             <a href="{{ url_for('dashboard') }}">Home</a>
-            <a href="{{url_for('home_page')}}">Graph_Analysis</a>
+            <a href="{{url_for('home_page')}}">Graph Analysis</a>
             <a href="{{ url_for('filter') }}">Filter</a> 
             <a href="{{ url_for('buysell') }}">Buy/Sell</a> 
             <a href="{{ url_for('logout') }}">Logout</a>
         </div>
     </div>
+    <!-- now the list of companys which is on the right panel of the webpage along with the links to their respective sites -->
    <div class="list-container">
         <h2>Nifty-50</h2>
         <ul>
@@ -76,6 +82,8 @@
 </ul>
 
     </div>
+    <!-- class topppers is for extracting the top 5 companies which gained the most at the instant
+    it keeps updating as per the time itself from the official data -->
     <div class="toppers">
     <h2>Top Gaining Companies:-</h2>
         <ul class="top-gaining-list">
@@ -84,6 +92,8 @@
             {% endfor %}
         </ul>
     </div>
+       <!-- class losers is for extracting the last 5 companies which lost the most at the instant
+    it keeps updating as per the time itself from the official data -->
     <div class="losers">
         <h2>Top Losing Companies:-</h2>
         <ul class="top-losing-list">

@@ -23,6 +23,10 @@
 </head>
 
 <body>
+      <!-- the taskbar is divided into 3 sections:-
+     leftmost for company logo
+     central for companys name
+     rightmost for the links to different pages -->
     <div class="taskbar">
         <div class="section1">
             <!-- <img src="logo.png"> -->
@@ -32,7 +36,7 @@
         </div>
         <div class="section3">
             <a href="{{ url_for('dashboard') }}">Home</a>
-            <a href="{{url_for('home_page')}}">Graph_Analysis</a>
+            <a href="{{url_for('home_page')}}">Graph Analysis</a>
             <a href="{{ url_for('filter') }}">Filter</a>
             <a href="{{ url_for('buysell') }}">Buy/Sell</a>
             <a href="{{ url_for('logout') }}">Logout</a>
@@ -40,7 +44,10 @@
     </div>
     <div class="container mt-5">
         <!-- <h1>Filter Page</h1> -->
-
+<!-- the below code is for the filter part 
+two criteria:-
+            P/E Ratio
+            Avg price -->
         <form action="{{ url_for('process_filter') }}" method="post">
             <div class="form-group">
                 <h1>Filter Options:</h1>
@@ -57,6 +64,7 @@
             </div>
 
             <div id="pe_ratio_fields">
+                <!-- now selecting the range of input values -->
                 <div class="form-group">
                     <label for="min_pe_ratio">Minimum P/E Ratio:</label>
                     <input type="number" class="form-control" name="min_pe_ratio" id="min_pe_ratio">
@@ -92,6 +100,7 @@
     <table class="table">
         <!-- <h2>Filtered Stocks:</h2> -->
         <thead>
+            <!-- this is for the table obtained -->
             <tr>
                 <th>Symbol</th>
                 <th>Company Name</th>
@@ -104,8 +113,8 @@
             <tr>
                 <td>{{ stock['symbol'] }}</td>
                 <td>{{ stock['company_name'] }}</td>
-                <td>{{ stock['pe_ratio'] }}</td>
-                <td>{{ stock['avg_price'] }}</td>
+                <td>{{ stock['pe_ratio']|round(2) }}</td>
+                <td>{{ stock['avg_price']|round(2) }}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -1,19 +1,17 @@
-/* stylegroww.css */
 
-/* Reset default margin and padding */
 body, html {
     margin: 0;
     padding: 0;
 }
 
-/* Set background image */
+
 body {
     background-image: url('back.jpg');
     background-size: cover;
     background-position: center;
 }
 
-/* Center the container vertically and horizontally */
+/* now the box part starts */
 .container {
     display: flex;
     justify-content: center;
@@ -22,7 +20,7 @@ body {
    /*width: 1000px;*/
 }
 
-/* Style the form container */
+
 .form-container {
     display: flex;
     width: 900px;
@@ -33,7 +31,7 @@ body {
     background-color: #f9f9f9;
 }
 
-/* Style the left section */
+
 .left-section {
     flex: 1;
     padding-right: 10px;
@@ -61,16 +59,16 @@ body {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 18px; /* Adjust the font size as needed */
-    font-family: 'Roboto', sans-serif; /* Roboto font */
-    /* Add any other styles or properties you may need */
+    font-size: 18px; 
+    font-family: 'Roboto', sans-serif; 
+  
 }
 
-
+/* submit button */
 .left-section button[type="submit"] {
     display: block;
     width: 50%;
-    margin: 0 auto; /* Center the button horizontally */
+    margin: 0 auto; 
     padding: 10px;
     border: none;
     border-radius: 3px;
@@ -78,7 +76,7 @@ body {
     color: #fff;
     cursor: pointer;
     font-size: 18px; 
-    font-family: 'Roboto', sans-serif; /* Roboto font */
+    font-family: 'Roboto', sans-serif; 
 }
 
 
@@ -108,18 +106,14 @@ body {
     text-align: center;
 }
 
-/* stylegroww.css */
 
-/* Your existing CSS styles */
-
-/* Style the right section */
 .right-section {
     /* background-image: url('imagegroww2.png'); */
     background-image: url('imagegrow2.png');
     background-size: cover;
     background-position: center;
-    width: 300px; /* Adjust the width as needed */
-    height: 400px; /* Adjust the height as needed */
+    width: 300px;
+    height: 400px;
 }
 
 

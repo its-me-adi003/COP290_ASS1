@@ -17,8 +17,8 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 100px;
-    background-color:black; /* Example background color */
-    padding: 20px; /* Adjust padding as needed */
+    background-color:black; 
+    padding: 20px; 
     width: 100%;
     position: fixed;
     top: 0px;
@@ -27,18 +27,18 @@ body {
 }
 
 .section1 {
-     flex: 1;/* Takes up available space */
+     flex: 1;
     /* padding-left: 200px; */
     height: 200px;
     width: 300px;
     background-repeat: no-repeat;
     background-image: url('logo.png');
-    background-size: contain; /* Adjust as needed */
+    background-size: contain; 
 }
 
 .section2 {
     flex: 1; 
-    text-align: center; /* Align content in the center */
+    text-align: center; 
     /* font-size: x-large; */
     height: 200px;
     width: 500px;
@@ -53,14 +53,14 @@ body {
 }
 
 .section3 {
-    flex: 1; /* Takes up available space */
-    text-align: right; /* Align content to the right */
+    flex: 1; 
+    text-align: right; 
     /* position: fixed; */
     right: 0%;
 }
 
 .section3 a {
-    margin-left: 15px; /* Adjust spacing between links */
+    margin-left: 15px; 
     margin-right:40px ;
     font-size: x-large;
     text-decoration: none;
@@ -72,8 +72,8 @@ body {
 
 
 .container {
-    width: 600px; /* Set maximum width for the container */
-    margin: 0 auto; /* Center the container on the page */
+    width: 600px; 
+    margin: 0 auto; 
     background-color:rgba(0, 0, 0, 0.4);
     height: 1100px;
     top:130px;
@@ -93,77 +93,77 @@ body {
 
 .form-check label,
 .form-group label {
-    color:blanchedalmond; /* Set label text color to white */
+    color:blanchedalmond; 
     font-size:x-large;
     margin-bottom: 100px;
 
 }
 
 .form-check-input {
-    margin-right: 10px; /* Adjust spacing between checkbox and label */
+    margin-right: 10px; 
 }
 
 .form-group {
-    margin-bottom: 100px; /* Adjust spacing between form groups */
+    margin-bottom: 100px; 
 }
 
 #timeRangeFields,
 #preciseDateFields1,
 #preciseDateFields2 {
-    margin-bottom: 50px; /* Adjust spacing between date and time range fields */
+    margin-bottom: 50px; 
 }
 #preciseDateFields1 {
-    margin-top: 50px; /* Set the distance between "Enter time range" and "Start date" */
+    margin-top: 50px; 
 }
 
 select,
 .input {
-    background-color: #333; /* Set background color for form elements */
+    background-color: #333; 
     font-size: large;
-    color: white; /* Set text color for form elements */
-    border: 1px solid #555; /* Set border color for form elements */
-    padding: 8px; /* Adjust padding for form elements */
-    width: 80%; /* Make form elements 100% width */
+    color: white; 
+    border: 1px solid #555; 
+    padding: 8px; 
+    width: 80%; 
 }
 
 .form-check,
 .form-group {
-    display: block; /* Ensure each form-check and form-group is on a new line */
+    display: block; 
 }
 
 
 .btn.btn-primary {
-    background-color: #4CAF50; /* Green background color */
-    border-color: #4CAF50; /* Green border color */
-    color: white; /* White text color */
-    padding: 10px 20px; /* Padding */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Cursor style on hover */
+    background-color: #4CAF50;
+    border-color: #4CAF50; 
+    color: white; 
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    cursor: pointer; 
 }
 
 /* Hover effect */
 .btn.btn-primary:hover {
-    background-color: #45a049; /* Darker green background color */
-    border-color: #45a049; /* Darker green border color */
+    background-color: #45a049; 
+    border-color: #45a049; 
 }
 
 
 input[type="date"] {
-    background-color: #333; /* Set background color */
-    color: white; /* Set text color */
-    border: 1px solid #555; /* Set border color */
-    padding: 8px; /* Set padding */
-    border-radius: 4px; /* Set border radius */
+    background-color: #333; 
+    color: white; 
+    border: 1px solid #555; 
+    padding: 8px; 
+    border-radius: 4px; 
     height: 20px;
     width:140px;
 }
 
 
 #plotlyGraph {
-    /* Example styles for positioning */
+    
     position: fixed;
-    top: 180px; /* Adjust as needed */
-    left: 0%; /* Adjust as needed */
-    width: 74%; /* Adjust as needed */
-    height: 50px; /* Adjust as needed */
+    top: 180px; 
+    left: 0%; 
+    width: 74%; 
+    height: 50px; 
 }

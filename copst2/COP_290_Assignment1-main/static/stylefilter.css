@@ -18,8 +18,8 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 100px;
-    background-color:black; /* Example background color */
-    padding: 20px; /* Adjust padding as needed */
+    background-color:black; 
+    padding: 20px; 
     width: 100%;
     position: absolute;
     top: 0px;
@@ -28,18 +28,18 @@ body {
 }
 
 .section1 {
-     flex: 1;/* Takes up available space */
+     flex: 1;
     /* padding-left: 200px; */
     height: 140px;
     width: 300px;
     background-repeat: no-repeat;
     background-image: url('logo.png');
-    background-size: contain; /* Adjust as needed */
+    background-size: contain; 
 }
 
 .section2 {
     flex: 1; 
-    text-align: center; /* Align content in the center */
+    text-align: center; 
     /* font-size: x-large; */
     height: 200px;
     width: 500px;
@@ -54,14 +54,14 @@ body {
 }
 
 .section3 {
-    flex: 1; /* Takes up available space */
-    text-align: right; /* Align content to the right */
+    flex: 1; 
+    text-align: right; 
     /* position: fixed; */
     right: 0%;
 }
 
 .section3 a {
-    margin-left: 15px; /* Adjust spacing between links */
+    margin-left: 15px; 
     margin-right:40px ;
     text-decoration: none;
     font-size: x-large;
@@ -69,12 +69,12 @@ body {
 }
  
 .btn.btn-primary {
-    background-color: #4CAF50; /* Green background color */
-    border-color: #4CAF50; /* Green border color */
-    color: white; /* White text color */
-    padding: 10px 20px; /* Padding */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Cursor style on hover */
+    background-color: #4CAF50; 
+    border-color: #4CAF50; 
+    color: white; 
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    cursor: pointer; 
     margin-top: 50px;
     margin-bottom: 200px;
 }
@@ -82,12 +82,12 @@ body {
 /* Hover effect */
 
 .btn.btn-primary:hover {
-    background-color: #45a049; /* Darker green background color */
-    border-color: #45a049; /* Darker green border color */
+    background-color: #45a049; 
+    border-color: #45a049; 
 }
 .container {
-    width: 20%; /* Set maximum width for the container */
-    margin: 0 auto; /* Center the container on the page */
+    width: 20%; 
+    margin: 0 auto; 
     background-color:rgba(0, 0, 0, 0.4);
     height: 1100px;
     top:130px;
@@ -105,12 +105,12 @@ body {
 }
 .container label
 {
-    color:blanchedalmond; /* Set label text color to white */
+    color:blanchedalmond; 
     font-size:x-large;
     margin-bottom: 300px;
 }
 .form-check label {
-    color:blanchedalmond; /* Set label text color to white */
+    color:blanchedalmond; 
     font-size:40px;
     margin-bottom: 100px;
 
@@ -142,10 +142,10 @@ body {
     font-size: larger;
 } */
 .table {
-    position:fixed; /* Fix the position */
-    top: 12%; /* Adjust top position as needed */
-    left:0%; /* Adjust left position as needed */
-    width: 80%; /* Adjust the width as needed */
+    position:fixed; 
+    top: 12%; 
+    left:0%; 
+    width: 80%; 
     background-color: black;
     color: white;
     border: 1px solid white;
