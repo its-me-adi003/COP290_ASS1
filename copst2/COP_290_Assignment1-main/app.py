@@ -15,48 +15,41 @@ matplotlib.use('Agg')
 
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with your actual secret key
+app.secret_key = 'your_secret_key'  
 
 # Database Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# User Model
+# User Database
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
-    balance = db.Column(db.Float, default=100000.0)  # Add this line for the balance column
-
+    balance = db.Column(db.Float, default=100000.0)  
+# Transaction Database
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     symbol = db.Column(db.String(10), nullable=False)
     amount = db.Column(db.Float, nullable=False)
-    transaction_type = db.Column(db.String(5), nullable=False)  # 'buy' or 'sell'
+    transaction_type = db.Column(db.String(5), nullable=False)  
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-# Initialize Database within Application Context
+
 with app.app_context():
     db.create_all()
 
     db.session.commit()
 
 
-
-
-
-
-
 @app.route('/')
 def index():
     return render_template('login.html')
 
-
-
-
+#welcome page
 @app.route('/welcome')
 def welcome():
     if 'user_id' in session:
@@ -66,7 +59,7 @@ def welcome():
         return redirect(url_for('index'))
 
 
-
+#register page
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -83,6 +76,7 @@ def register():
 
     return render_template('register.html')
 
+#login page
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
@@ -97,22 +91,18 @@ def login():
         flash('Invalid username or password')
         return redirect(url_for('index'))
 
-
+#function for getting the top 5 companies on the basis of closing price of last 4 days
 def get_top_companies(symbol_list, lookback_period='4d', top_count=5, get_gainers=True):
     top_companies = []
 
     for symbol in symbol_list:
         try:
-            # Download historical data
             historical_data = yf.download(symbol, period=lookback_period)
 
-            # Drop NaN values
             historical_data = historical_data.dropna()
 
-            # Calculate percentage change
             percent_change = (historical_data['Close'].pct_change() * 100).iloc[-1]
 
-            # Append to the list
             top_companies.append({'symbol': symbol, 'percent_change': percent_change})
         except Exception as e:
             print(f"Error fetching data for {symbol}: {e}")
@@ -120,18 +110,18 @@ def get_top_companies(symbol_list, lookback_period='4d', top_count=5, get_gainer
     # Sort the list by percentage change in ascending or descending order based on the parameter
     top_companies.sort(key=lambda x: x['percent_change'], reverse=not get_gainers)
 
-    # Return the top specified number of companies
     return top_companies[:top_count]
 
+#Home page
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
-        # symbol_list = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'SBIN.NS', 'SBILIFE.NS']
+
         symbol_list = ['ADANIENT.NS', 'ADANIPORTS.NS', 'APOLLOHOSP.NS', 'ASIANPAINT.NS', 'AXISBANK.NS', 'BAJAJ-AUTO.NS', 'BAJFINANCE.NS', 'BAJAJFINSV.NS', 'BPCL.NS', 'BHARTIARTL.NS', 'BRITANNIA.NS', 'CIPLA.NS', 'COALINDIA.NS', 'DIVISLAB.NS', 'DRREDDY.NS', 'EICHERMOT.NS', 'GRASIM.NS', 'HCLTECH.NS', 'HDFCBANK.NS', 'HDFCLIFE.NS', 'HEROMOTOCO.NS', 'HINDALCO.NS', 'HINDUNILVR.NS', 'ICICIBANK.NS', 'ITC.NS', 'INDUSINDBK.NS', 'INFY.NS', 'JSWSTEEL.NS', 'KOTAKBANK.NS', 'LTIM.NS', 'LT.NS', 'MARUTI.NS', 'NTPC.NS', 'NESTLEIND.NS', 'ONGC.NS', 'POWERGRID.NS', 'RELIANCE.NS', 'SBILIFE.NS', 'SBIN.NS', 'SUNPHARMA.NS', 'TCS.NS', 'TATACONSUM.NS', 'TATAMOTORS.NS', 'TATASTEEL.NS', 'TECHM.NS', 'TITAN.NS', 'UPL.NS', 'ULTRACEMCO.NS', 'WIPRO.NS']
-        # Get top gaining and losing companies
+        # top gaining and losing companies
         top_gaining_companies = get_top_companies(symbol_list, lookback_period='4d', get_gainers=False)
         top_losing_companies = get_top_companies(symbol_list, lookback_period='4d', get_gainers=True)
-        #print(top_gaining_companies)
+
         return render_template('welcome.html', username=session['username'],top_gaining_companies=top_gaining_companies,top_losing_companies=top_losing_companies)
     else:
         return redirect(url_for('index'))
@@ -143,8 +133,7 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
-# Update the route to in
-# clude company options
+#graph analysis page
 @app.route('/home_page')
 def home_page():
     if 'user_id' in session:
@@ -152,20 +141,17 @@ def home_page():
     else:
         return redirect(url_for('index'))
 
-
+#function for filter by average price
 def filter_by_average_price(symbol, min_avg_price, max_avg_price, lookback_period='1mo'):
     try:
-        # Get historical data from Yahoo Finance
         historical_data = yf.download(symbol, period=lookback_period)
 
         # Calculate average closing price
         avg_price = historical_data['Close'].mean()
 
-        # Get information from Yahoo Finance
         stock_info = yf.Ticker(symbol).info
 
-        # Extract relevant information
-        company_name = stock_info.get('longName', symbol)  # Use symbol if longName is not available
+        company_name = stock_info.get('longName', symbol)  
         pe_ratio = stock_info.get('trailingPE', None)
 
         # Filter stocks based on average price
@@ -179,13 +165,11 @@ def filter_by_average_price(symbol, min_avg_price, max_avg_price, lookback_perio
     
 def filter_by_pe_ratio(symbol, min_pe_ratio, max_pe_ratio):
     try:
-        # Get information from Yahoo Finance
         stock_info = yf.Ticker(symbol).info
         historical_data = yf.download(symbol, period='1mo')
 
-        # Extract relevant information
         pe_ratio = stock_info.get('trailingPE', None)
-        company_name = stock_info.get('longName', symbol)  # Use symbol if longName is not available
+        company_name = stock_info.get('longName', symbol)  
         avg_price = historical_data['Close'].mean()
 
         # Filter stocks based on P/E ratio within the specified range
@@ -210,7 +194,6 @@ def filter():
 def process_filter():
     if 'user_id' in session:
         if request.method == 'POST':
-            # symbol_list = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB']
             symbol_list = ['ADANIENT.NS', 'ADANIPORTS.NS', 'APOLLOHOSP.NS', 'ASIANPAINT.NS', 'AXISBANK.NS', 'BAJAJ-AUTO.NS', 'BAJFINANCE.NS', 'BAJAJFINSV.NS', 'BPCL.NS', 'BHARTIARTL.NS', 'BRITANNIA.NS', 'CIPLA.NS', 'COALINDIA.NS', 'DIVISLAB.NS', 'DRREDDY.NS', 'EICHERMOT.NS', 'GRASIM.NS', 'HCLTECH.NS', 'HDFCBANK.NS', 'HDFCLIFE.NS', 'HEROMOTOCO.NS', 'HINDALCO.NS', 'HINDUNILVR.NS', 'ICICIBANK.NS', 'ITC.NS', 'INDUSINDBK.NS', 'INFY.NS', 'JSWSTEEL.NS', 'KOTAKBANK.NS', 'LTIM.NS', 'LT.NS', 'MARUTI.NS', 'NTPC.NS', 'NESTLEIND.NS', 'ONGC.NS', 'POWERGRID.NS', 'RELIANCE.NS', 'SBILIFE.NS', 'SBIN.NS', 'SUNPHARMA.NS', 'TCS.NS', 'TATACONSUM.NS', 'TATAMOTORS.NS', 'TATASTEEL.NS', 'TECHM.NS', 'TITAN.NS', 'UPL.NS', 'ULTRACEMCO.NS', 'WIPRO.NS']
             pe_ratio_checkbox = request.form.get('pe_ratio_checkbox')
             avg_price_checkbox = request.form.get('avg_price_checkbox')
@@ -233,7 +216,6 @@ def process_filter():
             print(f"Avg Price Checkbox: {avg_price_checkbox}")
             print(f"Min Avg Price: {min_avg_price}, Max Avg Price: {max_avg_price}")
 
-            # Perform necessary actions based on the selected options
             filtered_stocks = []
 
             for symbol in symbol_list:
@@ -303,21 +285,20 @@ def process_dates():
                 # If the checkbox is ticked, calculate start_date and end_date based on the selected time range
                 time_range = request.form['time_range']
                 end_date = datetime.now()
-                
+                # options correspomding to time ranges 
                 if time_range == 'weekly':
                     start_date = end_date - timedelta(weeks=1)
                 elif time_range == 'monthly':
-                    start_date = end_date - timedelta(weeks=4)  # Assuming 4 weeks per month
+                    start_date = end_date - timedelta(weeks=4)  
                 elif time_range == 'yearly':
                     start_date = end_date - timedelta(weeks=52)
                 elif time_range == 'yearly3':
                     start_date = end_date - timedelta(days=365*3)
                 elif time_range == 'yearly10':
-                    start_date = end_date - timedelta(days=3650)# Assuming 52 weeks per year
+                    start_date = end_date - timedelta(days=3650)
                 else:
-                    # Add more options as needed
                     start_date = end_date
-                
+                #convert the date from string to %Y-%m-%d format
                 start_dateo = start_date.strftime('%Y-%m-%d')
                 end_dateo = end_date.strftime('%Y-%m-%d')
             
@@ -329,12 +310,8 @@ def process_dates():
                 
             company_codes = request.form.getlist('company_codes[]')
            
-            
-            
-            
-            
             stock_type = request.form['stock_type']
-            
+            #the combined data of all the selected companies
             combined_data = pd.DataFrame()
 
             for company_code in company_codes:
@@ -344,7 +321,7 @@ def process_dates():
                 except Exception as e:
                     return f"Failed to fetch data for {company_code}: {e}"
 
-            # Create an interactive Plotly graph
+            # Creating a graph thorugh Plotly
             fig = px.line(combined_data, x=combined_data.index, y=combined_data.columns, labels={'value': stock_type})
             fig.update_layout(height = 900)
             plot_div = fig.to_html(full_html=False)
@@ -420,8 +397,6 @@ def buysell():
 
             return redirect(url_for('buysell'))
 
-        # If it's a GET request, fetch stock prices and user's stocks for display
-        # company_symbols = ['AAPL', 'GOOGL', 'MSFT', 'AMZN']
         company_symbols = ['ADANIENT.NS', 'ADANIPORTS.NS', 'APOLLOHOSP.NS', 'ASIANPAINT.NS', 'AXISBANK.NS', 'BAJAJ-AUTO.NS', 'BAJFINANCE.NS', 'BAJAJFINSV.NS', 'BPCL.NS', 'BHARTIARTL.NS', 'BRITANNIA.NS', 'CIPLA.NS', 'COALINDIA.NS', 'DIVISLAB.NS', 'DRREDDY.NS', 'EICHERMOT.NS', 'GRASIM.NS', 'HCLTECH.NS', 'HDFCBANK.NS', 'HDFCLIFE.NS', 'HEROMOTOCO.NS', 'HINDALCO.NS', 'HINDUNILVR.NS', 'ICICIBANK.NS', 'ITC.NS', 'INDUSINDBK.NS', 'INFY.NS', 'JSWSTEEL.NS', 'KOTAKBANK.NS', 'LTIM.NS', 'LT.NS', 'MARUTI.NS', 'NTPC.NS', 'NESTLEIND.NS', 'ONGC.NS', 'POWERGRID.NS', 'RELIANCE.NS', 'SBILIFE.NS', 'SBIN.NS', 'SUNPHARMA.NS', 'TCS.NS', 'TATACONSUM.NS', 'TATAMOTORS.NS', 'TATASTEEL.NS', 'TECHM.NS', 'TITAN.NS', 'UPL.NS', 'ULTRACEMCO.NS', 'WIPRO.NS']
 
         stock_prices = get_stock_prices(company_symbols)
@@ -447,7 +422,7 @@ def get_stock_prices(symbols):
             # Append the data to the list
             stock_prices.append({
                 'symbol': symbol,
-                'company_name': get_company_name(symbol),  # You need to implement this function
+                'company_name': get_company_name(symbol),  
                 'current_price': current_price
             })
         except Exception as e:
@@ -455,14 +430,8 @@ def get_stock_prices(symbols):
 
     return stock_prices
 
-# def get_company_name(symbol):
-#     # You need to implement this function to get the company name based on the symbol
-#     # For now, it returns the symbol as a placeholder
-    
-#     return symbol
-
+#function to get company name given the symbol
 def get_company_name(symbol):
-    # Dictionary mapping symbols to full company names
     company_names = {
         "ADANIENT.NS": "Adani Enterprises Limited",
         "ADANIPORTS.NS": "Adani Ports and Special Economic Zone Limited",
@@ -521,13 +490,12 @@ def get_user_stocks(user_id):
     # Query the database to get the user's stocks
     user_stocks_query = Transaction.query.filter_by(user_id=user_id, transaction_type='buy').all()
 
-    # Process the query results into the desired format
     user_stocks = {}
 
     for stock in user_stocks_query:
         if stock.symbol not in user_stocks:
             user_stocks[stock.symbol] = {
-                'company_name': get_company_name(stock.symbol),  # You need to implement this function
+                'company_name': get_company_name(stock.symbol),  
                 'symbol': stock.symbol,
                 'amount': 0,
             }
